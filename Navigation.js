@@ -20,8 +20,8 @@ const Tab = createMaterialBottomTabNavigator();
 function Navigation() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={'AwalScreen'} screenOptions={{headerShown:false}}>
-          <Stack.Screen name="AwalScreen" component={HomeScreen} />
+        <Stack.Navigator initialRouteName={'HomeScreen'} screenOptions={{headerShown:false}}>
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="KeretaScreen" component={NavigationTab} />
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
           <Stack.Screen name="HasilScreen" component={HasilScreen} />

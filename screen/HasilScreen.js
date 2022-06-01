@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Appbar, List } from "react-native-paper";
+import { Appbar, List, Avatar } from "react-native-paper";
 
 function HasilScreen({ navigation }) {
     return (
@@ -59,7 +59,6 @@ function HasilScreen({ navigation }) {
                     onPress={() => navigation.navigate("PemesananScreen")}
                     />
             </View>
-
         </>
     );
 }
@@ -67,14 +66,13 @@ function HasilScreen({ navigation }) {
 const style = StyleSheet.create({
     background: {
         flex: 1,
-        // justifyContent: "space-between",
-        backgroundColor: "lightgrey",
-        // margin: 5,
+        backgroundColor: "#F4F3F3",
     },
     container: {
         flex: 0.1,
         backgroundColor: '#f7f7f7',
-        borderWidth: 1,
+        borderColor: '#32aae5',
+        borderWidth: 3,
         marginVertical: 5,
         marginHorizontal: 10,
         borderRadius: 10,
@@ -86,12 +84,13 @@ const style = StyleSheet.create({
     },
     subheader:{
         color : '#e86a09', 
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 5,
     },
     description:{
         fontWeight: 'bold',
         color : 'black',
-        marginTop: 5
+        marginTop: 10
     }
 })
 export default HasilScreen;

@@ -1,17 +1,13 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View, TouchableOpacity, ImageBackground} from 'react-native';
 
 function HomeScreen({ navigation }) {
+  const image = { uri: "https://scontent.fcgk29-1.fna.fbcdn.net/v/t31.18172-8/12291801_1490231021285245_6136544680250325317_o.png?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=DKas1MwWUFMAX8l1x_c&_nc_ht=scontent.fcgk29-1.fna&oh=00_AT9YDIUT-qSQvpZkup5eNO9aUBDZpzbJEgzy2ISKo4XF2w&oe=62BCBB3A" };
     return (
     <View style={styles.container}>
-        <Text style={styles.text1}>Selamat Datang Di Aplikasi Kereta Api Indonesia</Text>
-        <StatusBar style="auto" />
-
-        <TouchableOpacity 
-        style={styles.button} 
-        onPress={() => navigation.navigate("KeretaScreen")} >
-            <Text style={styles.text2}> Pesan Tiket !</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("KeretaScreen")}>
+        <ImageBackground source={image} style={{ width: 100, height: 100 }}></ImageBackground>
         </TouchableOpacity>
     </View>
     );
@@ -20,27 +16,9 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1ba0e2',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  text1: {
-    textAlign: "center",
-    justifyContent:"center",
-    fontSize:50, 
-    paddingTop:5,
-  },
-  text2: {
-    fontSize:20,
-    fontWeight:"bold"
-  },
-  button: {
-    borderWidth: 1,
-    borderColor:'#25d366',
-    alignItems:"center",
-    width:200,
-    marginTop:10,
-    backgroundColor:"#25d366",
   },
 });
 
