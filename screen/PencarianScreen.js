@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 
-function KeretaScreen({ navigation }) {
+function PencarianScreen({ navigation }) {
   const [Asal, setAsal] = React.useState("asal");
   const [Tujuan, setTujuan] = React.useState("tujuan");
   const [text, setText] = React.useState("");
@@ -133,4 +133,4 @@ const style = StyleSheet.create({
     flex: 1
   }
 });
-export default KeretaScreen;
+export default PencarianScreen;

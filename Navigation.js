@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fontisto } from '@expo/vector-icons';
 // import { Entypo } from '@expo/vector-icons'; 
-import KeretaScreen from './screen/KeretaScreen';
+import PencarianScreen from './screen/PencarianScreen';
 import TiketScreen from './screen/TiketScreen';
 import HomeScreen from './screen/HomeScreen';
 import HasilScreen from './screen/HasilScreen';
@@ -22,7 +22,7 @@ function Navigation() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName={'HomeScreen'} screenOptions={{headerShown:false}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="KeretaScreen" component={NavigationTab} />
+          <Stack.Screen name="PencarianScreen" component={NavigationTab} />
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
           <Stack.Screen name="HasilScreen" component={HasilScreen} />
           <Stack.Screen name="PemesananScreen" component={PemesananScreen} />
@@ -39,7 +39,7 @@ function NavigationTab() {
       >
         <Tab.Screen
           name="HomeTab"
-          component={KeretaScreen}
+          component={PencarianScreen}
           options={{
             tabBarLabel: false,
             tabBarIcon: ({color}) => (

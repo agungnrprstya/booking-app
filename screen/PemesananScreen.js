@@ -36,7 +36,7 @@ function PemesanScreen({ navigation }) {
                     // onPress={() => onSimpan()}
                     style={{ margin: 10 }}
                     color="#ed4f1a"
-                    onPress={() => navigation.navigate("KeretaScreen")}
+                    onPress={() => navigation.navigate("PencarianScreen")}
                 >
                     Simpan
                 </Button>
