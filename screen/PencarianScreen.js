@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import supabase from '../supabase';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 function PencarianScreen({ navigation }) {
   const [dataPicker, setDataPicker] = useState([]);
   const [asal, setAsal] = useState('');
   const [tujuan, setTujuan] = useState('');
+
   // const [tanggal, setTanggal] = React.useState('');
   // const [Tujuan, setTujuan] = React.useState("tujuan");
   // const [text, setText] = React.useState("");
