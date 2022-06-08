@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
+import supabase from '../supabase';
+import DatePicker from 'react-native-datepicker';
 
 function PencarianScreen({ navigation }) {
-  const [Asal, setAsal] = React.useState("asal");
-  const [Tujuan, setTujuan] = React.useState("tujuan");
-  const [text, setText] = React.useState("");
+  const [dataPicker, setDataPicker] = useState([]);
+  const [asal, setAsal] = useState('');
+  const [tujuan, setTujuan] = useState('');
+  const [date, setDate] = React.useState('');
+  // const [Tujuan, setTujuan] = React.useState("tujuan");
+  // const [text, setText] = React.useState("");
   const image = { uri: "https://cdn.dribbble.com/users/2222988/screenshots/6564288/bbb-02.jpg" };
   // const [selectedLanguage, setSelectedLanguage] = useState();
+
+  useEffect(() => {
+    getRute();
+  }, []);
+
+  //list data picker
+  const getRute = async() => {
+    const { data, error } = await supabase
+                              .from('rute')
+                              .select('id_rute, stasiun_asal, stasiun_tujuan, jam, tanggal')
+                              .order('stasiun_asal', {ascending:true});
+    setDataPicker(data);
+  }
 
   return (
     <>
@@ -22,23 +40,33 @@ function PencarianScreen({ navigation }) {
         />
       </Appbar.Header>
       <View style={style.bg}>
-      <ImageBackground source={image} style={{ width: 393, height: 200, }}></ImageBackground>
+      <ImageBackground source={image} style={{ width: 415, height: 200, alignSelf:'center'}}></ImageBackground>
       <View style={style.container}>
         {/* <ImageBackground source={image} style={{ width: 393, height: 200, }}></ImageBackground> */}
-        <Text style={style.header}> Pemesanan Tiket</Text>
+        <Text style={style.header}>Pemesanan Tiket</Text>
         <Text style={style.border}></Text>
         <Text style={style.text}>Rute Kereta</Text>
         <Picker
           style={style.picker}
-          selectedValue={Asal}
-          onValueChange={(itemValue, itemIndex) => setAsal(itemValue)}
-        >
-          <Picker.Item label="Kota Asal" value="asal" />
-          <Picker.Item label="Jakarta" value="jakarta" />
-          <Picker.Item label="Bandung" value="bandung" />
+          selectedValue={asal}
+          onValueChange={(value) => setAsal(value)}>    
+          <Picker.Item label="Kota Asal" value="" />
+          {dataPicker.map((row) => 
+          <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
+        )}
         </Picker>
         <Text style={style.text2}>Ke</Text>
         <Picker
+          style={style.picker}
+          selectedValue={tujuan}
+          onValueChange={(value) => setTujuan(value)}        
+        >
+          <Picker.Item label="Kota Tujuan" value="" />
+          {dataPicker.map((row) => 
+          <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
+        )}
+        </Picker>
+        {/* <Picker
           style={style.picker}
           selectedValue={Tujuan}
           onValueChange={(itemValue, itemIndex) => setTujuan(itemValue)}
@@ -46,9 +74,9 @@ function PencarianScreen({ navigation }) {
           <Picker.Item label="Kota Tujuan" value="tujuan" />
           <Picker.Item label="Jakarta" value="jakarta" />
           <Picker.Item label="Bandung" value="bandung" />
-        </Picker>
+        </Picker> */}
         <Text style={style.text3}>Tanggal Pergi</Text>
-        <TextInput
+        {/* <TextInput
           style={{
             backgroundColor: "#ffff",
             // marginBottom: 20,
@@ -57,7 +85,31 @@ function PencarianScreen({ navigation }) {
           value={text}
           onChangeText={(text) => setText(text)}
           left={<TextInput.Icon name="calendar" />}
+        /> */}
+        <DatePicker 
+        style={{width: 350, marginTop: 10, marginBottom:80}}
+        date={date}
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 5,
+            marginLeft: 7
+          },
+          dateInput: {
+            marginLeft: 45,
+            borderRadius: 50,
+            marginRight: 10,
+            // fontWeight: 'bold'
+          }
+        }}
+        // placeholder='Pilih Tanggal'
+        format='DD-MM-YYYY'
+        // confirmBtnText='Confirm'
+        // cancelBtnText='Cancel'
+        onDateChange={(date) => setDate(date)}
         />
+      {/* <Text></Text> */}
       </View>
         <Button
           mode="contained"
@@ -65,11 +117,11 @@ function PencarianScreen({ navigation }) {
           color="#ed4f1a"
           style={{
             borderRadius: 30,
-            marginTop: 275,
-            marginHorizontal: 13,
+            marginTop: 350,
+            marginHorizontal: 31,
           }}
         >
-          Cari
+          CARI
         </Button>
       </View>
     </>
@@ -125,7 +177,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     // justifyContent: 'center',
     // height: 100,
-    width: 330,
+    width: 350,
     // alignItems: 'left'
     },
   bg: {

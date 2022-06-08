@@ -5,8 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons'; 
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Fontisto } from '@expo/vector-icons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { Fontisto } from '@expo/vector-icons';
+// import { FontAwesome5 } from '@expo/vector-icons'; 
 // import { Entypo } from '@expo/vector-icons'; 
 import PencarianScreen from './screen/PencarianScreen';
 import TiketScreen from './screen/TiketScreen';
@@ -20,7 +21,7 @@ const Tab = createMaterialBottomTabNavigator();
 function Navigation() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={'HomeScreen'} screenOptions={{headerShown:false}}>
+        <Stack.Navigator initialRouteName={'PencarianScreen'} screenOptions={{headerShown:false}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="PencarianScreen" component={NavigationTab} />
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
@@ -53,7 +54,7 @@ function NavigationTab() {
           options={{
             tabBarLabel: false,
             tabBarIcon: ({color}) => (
-            <Fontisto name="ticket" color={color} size={26} />
+            <MaterialCommunityIcons name="ticket-account" color={color} size={26} />
             ),
           }}
         />

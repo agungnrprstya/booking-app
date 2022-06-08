@@ -1,12 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Alert } from "react-native";
-import { Appbar, TextInput, List, Button } from "react-native-paper";
-import { Ionicons } from '@expo/vector-icons'; 
-// import { Picker } from '@react-native-picker/picker';
+import React, { useState, useEffect } from 'react';
+import { View, Alert, StyleSheet } from 'react-native';
+import { Appbar, TextInput, Button } from "react-native-paper";
+import supabase from '../supabase';
 
 function PemesanScreen({ navigation }) {
     const [nama, setNama] = React.useState('');
-    const [nomor, setNomor] = React.useState('');
+    const [telepon, setTelepon] = React.useState('');
+
+    const onSimpan = async() => {
+        //data : hasil query, error : pesan error
+        const { data, error } = await supabase
+                                  .from('penumpang')
+                                  .insert({
+                                    nama_penumpang: nama,
+                                    no_telepon: telepon
+                                  });
+        // console.log(error)                          
+        Alert.alert("Pesan", "Data Berhasil Disimpan");
+        navigation.navigate("PencarianScreen")
+      }  
 
     return (
         <>
@@ -25,18 +37,31 @@ function PemesanScreen({ navigation }) {
             <TextInput
                 style={{ backgroundColor: '#ffff' }}
                 label="Nomor Telepon"
-                value={nomor}
+                value={telepon}
                 left={<TextInput.Icon name="phone" />}
-                onChangeText={nomor => setNomor(nomor)}
+                onChangeText={telpon => setTelepon(telpon)}
 
             />
             <View>
-                <Button
+                {/* <Button
                     mode="contained"
                     // onPress={() => onSimpan()}
                     style={{ margin: 10 }}
                     color="#ed4f1a"
                     onPress={() => navigation.navigate("PencarianScreen")}
+                >
+                    Simpan
+                </Button> */}
+                <Button
+                    mode="contained"
+                    style={{ margin: 10 }}
+                    color="#ed4f1a"
+                    onPress={() => Alert.alert("Pesan", "Apakah Data Sudah Benar?",
+                        [   
+                            {text: "Tidak"},
+                            {text: "Iya", onPress: () => onSimpan()}
+                        ]
+                    )}                       
                 >
                     Simpan
                 </Button>
