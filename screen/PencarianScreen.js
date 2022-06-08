@@ -3,17 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import supabase from '../supabase';
-import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 function PencarianScreen({ navigation }) {
   const [dataPicker, setDataPicker] = useState([]);
   const [asal, setAsal] = useState('');
   const [tujuan, setTujuan] = useState('');
-  const [date, setDate] = React.useState('');
+  // const [tanggal, setTanggal] = React.useState('');
   // const [Tujuan, setTujuan] = React.useState("tujuan");
   // const [text, setText] = React.useState("");
   const image = { uri: "https://cdn.dribbble.com/users/2222988/screenshots/6564288/bbb-02.jpg" };
-  // const [selectedLanguage, setSelectedLanguage] = useState();
 
   useEffect(() => {
     getRute();
@@ -66,29 +65,10 @@ function PencarianScreen({ navigation }) {
           <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
         )}
         </Picker>
-        {/* <Picker
-          style={style.picker}
-          selectedValue={Tujuan}
-          onValueChange={(itemValue, itemIndex) => setTujuan(itemValue)}
-        >
-          <Picker.Item label="Kota Tujuan" value="tujuan" />
-          <Picker.Item label="Jakarta" value="jakarta" />
-          <Picker.Item label="Bandung" value="bandung" />
-        </Picker> */}
         <Text style={style.text3}>Tanggal Pergi</Text>
-        {/* <TextInput
-          style={{
-            backgroundColor: "#ffff",
-            // marginBottom: 20,
-          }}
-          label="DD/MM/YYYY"
-          value={text}
-          onChangeText={(text) => setText(text)}
-          left={<TextInput.Icon name="calendar" />}
-        /> */}
-        <DatePicker 
+        {/* <DatePicker 
         style={{width: 350, marginTop: 10, marginBottom:80}}
-        date={date}
+        date={tanggal}
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -100,20 +80,16 @@ function PencarianScreen({ navigation }) {
             marginLeft: 45,
             borderRadius: 50,
             marginRight: 10,
-            // fontWeight: 'bold'
           }
         }}
-        // placeholder='Pilih Tanggal'
         format='DD-MM-YYYY'
-        // confirmBtnText='Confirm'
-        // cancelBtnText='Cancel'
-        onDateChange={(date) => setDate(date)}
-        />
+        onDateChange={(date) => setTanggal(date)}
+        /> */}
       {/* <Text></Text> */}
       </View>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("HasilScreen")}
+          onPress={() => navigation.navigate("HasilScreen",  {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal:tanggal })}
           color="#ed4f1a"
           style={{
             borderRadius: 30,

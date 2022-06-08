@@ -14,6 +14,7 @@ import TiketScreen from './screen/TiketScreen';
 import HomeScreen from './screen/HomeScreen';
 import HasilScreen from './screen/HasilScreen';
 import PemesananScreen from './screen/PemesananScreen';
+// import TambahTiketScreen from './screen/TambahTiketScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -27,6 +28,7 @@ function Navigation() {
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
           <Stack.Screen name="HasilScreen" component={HasilScreen} />
           <Stack.Screen name="PemesananScreen" component={PemesananScreen} />
+          {/* <Stack.Screen name="TambahTiketScreen" component={TambahTiketScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     );

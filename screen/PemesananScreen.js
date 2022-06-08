@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet, Text } from 'react-native';
 import { Appbar, TextInput, Button } from "react-native-paper";
 import supabase from '../supabase';
 
 function PemesanScreen({ navigation }) {
     const [nama, setNama] = React.useState('');
     const [telepon, setTelepon] = React.useState('');
+    // const [kereta, setKereta] = React.useState('');
+    // const [tanggal, setTanggal] = React.useState('');
 
     const onSimpan = async() => {
         //data : hasil query, error : pesan error
@@ -42,12 +44,13 @@ function PemesanScreen({ navigation }) {
                 onChangeText={telpon => setTelepon(telpon)}
 
             />
+            {/* <Text>{kereta}</Text> */}
             <View>
                 {/* <Button
                     mode="contained"
                     // onPress={() => onSimpan()}
                     style={{ margin: 10 }}
-                    color="#ed4f1a"
+                    color="#ed4f1a"     
                     onPress={() => navigation.navigate("PencarianScreen")}
                 >
                     Simpan

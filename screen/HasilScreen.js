@@ -3,9 +3,9 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { Appbar, List, Avatar } from "react-native-paper";
 import supabase from '../supabase';
 
-function HasilScreen({ navigation }) {
+function HasilScreen({ navigation, route }) {
+    let filter= route.params
     const [data, setData] = useState([]);
-
     useEffect(() => {
         getData();
         }, [data]);
@@ -14,8 +14,11 @@ function HasilScreen({ navigation }) {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
                                   .from('kereta')
-                                  .select('id_kereta, nama_kereta, harga, rute:id_rute(jam)')
-                                  .order('id_kereta', {ascending:false});
+                                  .select('*, rute:id_rute(*)')
+                                  .eq('id_rute', filter.stasiun_tujuan)
+                                  .eq('id_rute', filter.stasiun_asal)
+                                //   .eq('id_rute', filter.stasiun_tujuan)
+                                //   .order('nama_kereta', {ascending:false});
         //mengisi state data
         // console.log(error)
         setData(data);
