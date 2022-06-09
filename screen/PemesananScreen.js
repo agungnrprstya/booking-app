@@ -3,24 +3,36 @@ import { View, Alert, StyleSheet, Text } from 'react-native';
 import { Appbar, TextInput, Button } from "react-native-paper";
 import supabase from '../supabase';
 
-function PemesanScreen({ navigation }) {
+function PemesanScreen({ navigation, route}) {
     const [nama, setNama] = React.useState('');
     const [telepon, setTelepon] = React.useState('');
+    let filter= route.params
     // const [kereta, setKereta] = React.useState('');
     // const [tanggal, setTanggal] = React.useState('');
 
     const onSimpan = async() => {
         //data : hasil query, error : pesan error
-        const { data, error } = await supabase
+        let penumpang = await supabase
                                   .from('penumpang')
                                   .insert({
-                                    nama_penumpang: nama,
+                                    nama_penumpang: nama,   
                                     no_telepon: telepon
                                   });
         // console.log(error)                          
-        Alert.alert("Pesan", "Data Berhasil Disimpan");
-        navigation.navigate("PencarianScreen")
-      }  
+        // console.log({ pemesan: pemesan.error, id: pemesan.data[0].id})
+        let id_penumpang = penumpang.data[0].id_penumpang;
+
+        let tiket = await supabase
+        .from('tiket')
+        .insert({
+            id_kereta: filter.id_kereta,
+            id_penumpang: id_penumpang,
+            id_rute: filter.id_rute
+        })
+        // console.log({ tiket: tiket.error, id: tiket.data[0].id })
+        Alert.alert('Tiket Berhasil Di Pesan');
+        navigation.navigate('PencarianScreen');
+    }  
 
     return (
         <>

@@ -22,7 +22,7 @@ function PencarianScreen({ navigation }) {
   const getRute = async() => {
     const { data, error } = await supabase
                               .from('rute')
-                              .select('id_rute, stasiun_asal, stasiun_tujuan, jam, tanggal')
+                              .select('*')
                               .order('stasiun_asal', {ascending:true});
     setDataPicker(data);
   }

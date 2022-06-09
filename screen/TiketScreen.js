@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Appbar, List, Avatar, Button } from "react-native-paper";
 import supabase from '../supabase';
+import style from 'react-native-datepicker/style';
 
 function TiketScreen({ navigation }) {
 
@@ -39,7 +40,7 @@ function TiketScreen({ navigation }) {
         <View>
           <Text style={styles.jadwal}>Jadwal Kereta</Text>
         </View>
-        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', backgroundColor:'#fff'}}>
+        <View style={styles.border}>
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.kereta}>{item.kereta.nama_kereta}</Text>
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
@@ -67,7 +68,7 @@ function TiketScreen({ navigation }) {
         <View style={styles.view}>
           <Text style={styles.penumpang}>Penumpang</Text>
         </View>
-        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', backgroundColor:'#fff', marginBottom:10}}>
+        <View style={styles.border}>
         <View style={{ marginLeft: 10, marginTop: 15, }}>
           <Text style={{ marginBottom: 10 }}>{item.penumpang.nama_penumpang}</Text>
           <Text style={{ marginBottom: 20, color:'black' }}>{item.penumpang.no_telepon}</Text>
@@ -107,6 +108,13 @@ const styles = StyleSheet.create({
     // borderWidth: 1, 
     // backgroundColor: '#F4F3F3', 
     // color: 'black'
+  },
+  border:{
+    borderWidth: 3,
+    borderRadius: 20, 
+    marginHorizontal:10, 
+    borderColor: '#32aae5', 
+    backgroundColor:'#fff'
   },
   kereta:{
     marginTop: 20, 

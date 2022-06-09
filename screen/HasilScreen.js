@@ -47,7 +47,7 @@ function HasilScreen({ navigation, route }) {
                         descriptionStyle={style.description}
                         left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
                         right={props => <List.Subheader {...props} style={style.subheader}> Rp {item.harga}.- </List.Subheader>}
-                        onPress={() => navigation.navigate("PemesananScreen")}
+                        onPress={() => navigation.navigate("PemesananScreen", {id_kereta:item.id_kereta, id_rute:item.rute.id_rute})}
                 />
                 // {/* <List.Item
                 //     style={style.container}
