@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import supabase from '../supabase';
+import DatePicker from 'react-native-datepicker'
 
 function PencarianScreen({ navigation }) {
   const [dataPicker, setDataPicker] = useState([]);
   const [asal, setAsal] = useState('');
   const [tujuan, setTujuan] = useState('');
-
-  // const [tanggal, setTanggal] = React.useState('');
+  const [tanggal, setTanggal] = React.useState('');
   // const [Tujuan, setTujuan] = React.useState("tujuan");
   // const [text, setText] = React.useState("");
   const image = { uri: "https://cdn.dribbble.com/users/2222988/screenshots/6564288/bbb-02.jpg" };
@@ -66,7 +66,7 @@ function PencarianScreen({ navigation }) {
         )}
         </Picker>
         <Text style={style.text3}>Tanggal Pergi</Text>
-        {/* <DatePicker 
+        <DatePicker 
         style={{width: 350, marginTop: 10, marginBottom:80}}
         date={tanggal}
         customStyles={{
@@ -84,7 +84,7 @@ function PencarianScreen({ navigation }) {
         }}
         format='DD-MM-YYYY'
         onDateChange={(date) => setTanggal(date)}
-        /> */}
+        />
       {/* <Text></Text> */}
       </View>
         <Button

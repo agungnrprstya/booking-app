@@ -1,10 +1,27 @@
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Appbar, List, Avatar, Button } from "react-native-paper";
-
-// import Navigation from './Navigation';
+import supabase from '../supabase';
 
 function TiketScreen({ navigation }) {
+
+  const [data, setData] = useState([]);
+    useEffect(() => {
+        getData();
+        }, [data]);
+    
+      const getData = async() => {
+        //data : hasil query, error : pesan error
+        const { data, error } = await supabase
+                                  .from('tiket')
+                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*)')
+                                  .order('id_tiket', {ascending:false});
+        //mengisi state data
+        // console.log(error)
+        setData(data);
+      }
+
   return (
     <>
       <Appbar.Header>
@@ -14,18 +31,23 @@ function TiketScreen({ navigation }) {
           color="white"
         />
       </Appbar.Header>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => (
       <View style={styles.container}>
         <View style={styles.view}>
           <Text style={styles.jadwal}>Jadwal Kereta</Text>
         </View>
+        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', marginVertical:10, backgroundColor:'#fff'}}>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.kereta}>SINGASARI</Text>
+          <Text style={styles.kereta}>{item.kereta.nama_kereta}</Text>
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
         </View>
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ marginLeft: 10 }}> 07. 30</Text>
-          <Text style={{ marginLeft: 35 }}> Stasiun Bandung</Text>
-          <Text style={styles.tanggal_br}> 7 Mei</Text>
+          <Text style={{ marginLeft: 35 }}> {item.rute.stasiun_asal}</Text>
+          <Text style={styles.tanggal_br}> {item.rute.tanggal}</Text>
         </View>
         <View style={{ marginLeft: 70 }}>
           <Text style={{position: 'absolute'}}>|</Text>
@@ -37,16 +59,17 @@ function TiketScreen({ navigation }) {
         </View>
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
           <Text style={{ marginLeft: 10, marginTop: 50 }}> 17. 30</Text>
-          <Text style={{ marginLeft: 40, marginTop: 50, color:'black' }}> Stasiun Pasar Senen</Text>
+          <Text style={{ marginLeft: 40, marginTop: 50, color:'black' }}> {item.rute.stasiun_tujuan}</Text>
           <Text style={styles.tanggal_pl}> 7 Mei</Text>
         </View>
-        <Text></Text>
+        </View>
+        {/* <Text></Text> */}
         <View style={styles.view}>
           <Text style={styles.penumpang}>Penumpang</Text>
         </View>
         <View style={{ marginLeft: 10, marginTop: 15, }}>
-          <Text style={{ marginBottom: 10 }}>Tn. Agung</Text>
-          <Text style={{ marginBottom: 20 }}>081383262954</Text>
+          <Text style={{ marginBottom: 10 }}>{item.penumpang.nama_penumpang}</Text>
+          <Text style={{ marginBottom: 20, color:'black' }}>{item.penumpang.no_telepon}</Text>
           {/* <Text></Text> */}
         </View>
         <View style={styles.view}>
@@ -62,6 +85,8 @@ function TiketScreen({ navigation }) {
         </Button> */}
         <StatusBar style="auto" />
       </View>
+       )}
+      />  
     </>
   );
 }
@@ -69,7 +94,7 @@ function TiketScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F4F3F3',
   },
   view:{
     borderColor: '#F4F3F3', 
@@ -99,7 +124,7 @@ const styles = StyleSheet.create({
   },
   avatar:{
     backgroundColor: '#ffff', 
-    marginLeft: 240, 
+    marginLeft: 140, 
     marginRight: 10,
   },
   tanggal_br:{
