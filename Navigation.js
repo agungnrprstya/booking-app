@@ -22,7 +22,7 @@ const Tab = createMaterialBottomTabNavigator();
 function Navigation() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={'PencarianScreen'} screenOptions={{headerShown:false}}>
+        <Stack.Navigator initialRouteName={'HomeScreen'} screenOptions={{headerShown:false}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="PencarianScreen" component={NavigationTab} />
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
