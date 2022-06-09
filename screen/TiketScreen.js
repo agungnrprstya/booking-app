@@ -17,7 +17,7 @@ function TiketScreen({ navigation }) {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
                                   .from('tiket')
-                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*)')
+                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*), stasiun:id_stasiun(*)')
                                   .order('id_tiket', {ascending:false});
         //mengisi state data
         // console.log(error)
@@ -44,9 +44,9 @@ function TiketScreen({ navigation }) {
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
         </View>
         <View style={{ flexDirection: 'row', marginTop:20}}>
-          <Text style={{ marginLeft: 11,}}> {item.rute.stasiun_asal} </Text>
+          <Text style={{ marginLeft: 11,}}> {item.stasiun.stasiun_asal} </Text>
           <Text style={{color:'#32aae5', fontWeight:'bold'}}>←----------------------------------→</Text>
-          <Text style={{color:'black'}}> {item.rute.stasiun_tujuan} </Text>
+          <Text style={{color:'black'}}> {item.stasiun.stasiun_tujuan} </Text>
         </View>
         <View style={{ marginLeft: 70 }}>
         </View>
@@ -62,7 +62,7 @@ function TiketScreen({ navigation }) {
         </View>
         <View>
         <Text style={{color:'black', marginLeft:270, marginTop:-92, position:'absolute', fontWeight:'bold'}}>Harga</Text>
-        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.kereta.harga}</Text>
+        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.rute.harga}</Text>
         </View>
         </View>
       

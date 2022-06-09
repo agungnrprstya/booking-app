@@ -21,9 +21,9 @@ function PencarianScreen({ navigation }) {
   //list data picker
   const getRute = async() => {
     const { data, error } = await supabase
-                              .from('rute')
+                              .from('stasiun')
                               .select('*')
-                              .order('stasiun_asal', {ascending:true});
+                              // .order('stasiun_asal', {ascending:true});
     setDataPicker(data);
   }
 
@@ -51,7 +51,7 @@ function PencarianScreen({ navigation }) {
           onValueChange={(value) => setAsal(value)}>    
           <Picker.Item label="Kota Asal" value="" />
           {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
+          <Picker.Item label={row.stasiun_asal} value={row.id_stasiun} />
         )}
         </Picker>
         <Text style={style.text2}>Ke</Text>
@@ -62,7 +62,7 @@ function PencarianScreen({ navigation }) {
         >
           <Picker.Item label="Kota Tujuan" value="" />
           {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
+          <Picker.Item label={row.stasiun_tujuan} value={row.id_stasiun} />
         )}
         </Picker>
         <Text style={style.text3}>Tanggal Pergi</Text>
@@ -89,7 +89,7 @@ function PencarianScreen({ navigation }) {
       </View>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("HasilScreen",  {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal:tanggal })}
+          onPress={() => navigation.navigate("HasilScreen",  {stasiun_asal: asal, stasiun_tujuan: tujuan})}
           color="#ed4f1a"
           style={{
             borderRadius: 30,

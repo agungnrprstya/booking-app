@@ -5,6 +5,7 @@ import supabase from '../supabase';
 
 function HasilScreen({ navigation, route }) {
     let filter= route.params
+    // console.log(route)
     const [data, setData] = useState([]);
     useEffect(() => {
         getData();
@@ -13,10 +14,10 @@ function HasilScreen({ navigation, route }) {
       const getData = async() => {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
-                                  .from('kereta')
-                                  .select('*, rute:id_rute(*)')
-                                  .eq('id_rute', filter.stasiun_tujuan)
-                                  .eq('id_rute', filter.stasiun_asal)
+                                  .from('rute')
+                                  .select('*, kereta:id_kereta(*), stasiun:id_stasiun(*)')
+                                  .eq('id_stasiun', filter.stasiun_tujuan)
+                                  .eq('id_stasiun', filter.stasiun_asal)
                                 //   .eq('id_rute', filter.stasiun_tujuan)
                                 //   .order('nama_kereta', {ascending:false});
         //mengisi state data
@@ -41,13 +42,13 @@ function HasilScreen({ navigation, route }) {
                     <List.Item
                         style={style.container}
                         key={index}
-                        title={item.nama_kereta}
+                        title={item.kereta.nama_kereta}
                         titleStyle={style.title}
-                        description={item.rute.jam}
+                        description={item.jam}
                         descriptionStyle={style.description}
                         left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
                         right={props => <List.Subheader {...props} style={style.subheader}> Rp {item.harga}.- </List.Subheader>}
-                        onPress={() => navigation.navigate("PemesananScreen", {id_kereta:item.id_kereta, id_rute:item.rute.id_rute})}
+                        onPress={() => navigation.navigate("PemesananScreen", {id_rute:item.id_kereta, id_kereta:item.kereta.id_kereta, id_stasiun:item.stasiun.id_stasiun})}
                 />
                 // {/* <List.Item
                 //     style={style.container}
