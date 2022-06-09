@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Appbar, List, Avatar, Button } from "react-native-paper";
 import supabase from '../supabase';
-import style from 'react-native-datepicker/style';
+// import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+// import style from 'react-native-datepicker/style';
 
 function TiketScreen({ navigation }) {
 
@@ -36,55 +37,36 @@ function TiketScreen({ navigation }) {
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.jadwal}>Jadwal Kereta</Text>
-        </View>
+      <View>
         <View style={styles.border}>
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.kereta}>{item.kereta.nama_kereta}</Text>
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
         </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ marginLeft: 10 }}> 07. 30</Text>
-          <Text style={{ marginLeft: 35 }}> {item.rute.stasiun_asal}</Text>
-          <Text style={styles.tanggal_br}> {item.rute.tanggal}</Text>
+        <View style={{ flexDirection: 'row', marginTop:20}}>
+          <Text style={{ marginLeft: 11,}}> {item.rute.stasiun_asal} </Text>
+          <Text style={{color:'#32aae5', fontWeight:'bold'}}>←----------------------------------→</Text>
+          <Text style={{color:'black'}}> {item.rute.stasiun_tujuan} </Text>
         </View>
         <View style={{ marginLeft: 70 }}>
-          <Text style={{position: 'absolute'}}>|</Text>
-          <Text style={{position: 'absolute', marginTop: 10}}>|</Text>
-          <Text style={{position: 'absolute', marginTop: 20}}>|</Text>
-          <Text style={{position: 'absolute', marginTop: 30}}>|</Text>
-          <Text style={{position: 'absolute', marginTop: 40, marginLeft: -7}}>🔵</Text>
-          <Text style={{position: 'absolute', marginTop: -10, marginLeft: -7}}>🔘</Text>
         </View>
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-          <Text style={{ marginLeft: 10, marginTop: 50 }}> 17. 30</Text>
-          <Text style={{ marginLeft: 40, marginTop: 50, color:'black' }}> {item.rute.stasiun_tujuan}</Text>
-          <Text style={styles.tanggal_pl}> 7 Mei</Text>
+          <Text style={{ marginLeft:30, marginTop: 4 }}> {item.rute.jam}</Text>
+          <Text style={{color:'red', fontWeight:'bold', marginHorizontal: 5, marginTop: 3}}>-----------</Text>
+          <Text style={{color:'black', marginTop: 4}}> {item.rute.tanggal}</Text>
         </View>
-        </View>
-        {/* <Text></Text> */}
-        <View style={styles.view}>
+        <View style={{marginLeft:15}}>
           <Text style={styles.penumpang}>Penumpang</Text>
-        </View>
-        <View style={styles.border}>
-        <View style={{ marginLeft: 10, marginTop: 15, }}>
           <Text style={{ marginBottom: 10 }}>{item.penumpang.nama_penumpang}</Text>
-          <Text style={{ marginBottom: 20, color:'black' }}>{item.penumpang.no_telepon}</Text>
+          <Text style={{ marginBottom: 20, color:'black'}}>{item.penumpang.no_telepon}</Text>
+        </View>
+        <View>
+        <Text style={{color:'black', marginLeft:270, marginTop:-92, position:'absolute', fontWeight:'bold'}}>Harga</Text>
+        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.kereta.harga}</Text>
         </View>
         </View>
-        {/* <View style={styles.view}>
-          <Text style={{ marginTop: 200, marginLeft: 10, marginBottom: 10 }}></Text>
-        </View> */}
-        {/* <Button 
-            icon="plus" 
-            mode="contained" 
-            onPress={() => navigation.navigate('TambahTiketScreen')}
-            style={{margin:10}}
-        >
-          Tambah Tiket
-        </Button> */}
+      
+
         <StatusBar style="auto" />
       </View>
        )}
@@ -103,23 +85,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical:5
   },
-  view:{
-    // borderColor: 'black', 
-    // borderWidth: 1, 
-    // backgroundColor: '#F4F3F3', 
-    // color: 'black'
-  },
   border:{
     borderWidth: 3,
     borderRadius: 20, 
-    marginHorizontal:10, 
+    marginHorizontal:20, 
+    marginVertical: 10,
+    borderColor: '#32aae5', 
+    backgroundColor:'#fff'
+  },
+  border_penumpang:{
+    borderWidth: 3,
+    borderRadius: 20, 
+    marginHorizontal:10,
+    marginBottom: 10,
     borderColor: '#32aae5', 
     backgroundColor:'#fff'
   },
   kereta:{
     marginTop: 20, 
     marginLeft: 14, 
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color:'black'
   },
   jadwal: {
     borderColor: '#F4F3F3',
@@ -132,14 +118,14 @@ const styles = StyleSheet.create({
   },
   penumpang: {
     marginTop: 10, 
-    marginLeft: 16, 
+    // marginLeft: 16, 
     marginBottom: 10,
     fontWeight: 'bold',
   },
   avatar:{
     backgroundColor: '#ffff', 
-    marginLeft: 100, 
-    // marginRight: 10,
+    marginLeft: 280,
+    position:'absolute',
   },
   tanggal_br:{
     marginLeft: 17, 
