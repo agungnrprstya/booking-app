@@ -36,10 +36,10 @@ function TiketScreen({ navigation }) {
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
       <View style={styles.container}>
-        <View style={styles.view}>
+        <View>
           <Text style={styles.jadwal}>Jadwal Kereta</Text>
         </View>
-        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', marginVertical:10, backgroundColor:'#fff'}}>
+        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', backgroundColor:'#fff'}}>
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.kereta}>{item.kereta.nama_kereta}</Text>
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
@@ -67,14 +67,15 @@ function TiketScreen({ navigation }) {
         <View style={styles.view}>
           <Text style={styles.penumpang}>Penumpang</Text>
         </View>
+        <View style={{borderWidth: 3, borderRadius: 20, marginHorizontal:10, borderColor: '#32aae5', backgroundColor:'#fff', marginBottom:10}}>
         <View style={{ marginLeft: 10, marginTop: 15, }}>
           <Text style={{ marginBottom: 10 }}>{item.penumpang.nama_penumpang}</Text>
           <Text style={{ marginBottom: 20, color:'black' }}>{item.penumpang.no_telepon}</Text>
-          {/* <Text></Text> */}
         </View>
-        <View style={styles.view}>
+        </View>
+        {/* <View style={styles.view}>
           <Text style={{ marginTop: 200, marginLeft: 10, marginBottom: 10 }}></Text>
-        </View>
+        </View> */}
         {/* <Button 
             icon="plus" 
             mode="contained" 
@@ -95,12 +96,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F4F3F3',
+    borderColor: 'black',
+    borderWidth: 5,
+    borderRadius: 20,
+    marginHorizontal: 10,
+    marginVertical:5
   },
   view:{
-    borderColor: '#F4F3F3', 
-    borderWidth: 1, 
-    backgroundColor: '#F4F3F3', 
-    color: 'black'
+    // borderColor: 'black', 
+    // borderWidth: 1, 
+    // backgroundColor: '#F4F3F3', 
+    // color: 'black'
   },
   kereta:{
     marginTop: 20, 
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
   jadwal: {
     borderColor: '#F4F3F3',
     marginTop: 10,
-    marginLeft: 10, 
+    marginLeft: 16, 
     marginBottom: 10,
     backgroundColor: '#F4F3F3', 
     color: 'black',
@@ -118,14 +124,14 @@ const styles = StyleSheet.create({
   },
   penumpang: {
     marginTop: 10, 
-    marginLeft: 10, 
+    marginLeft: 16, 
     marginBottom: 10,
     fontWeight: 'bold',
   },
   avatar:{
     backgroundColor: '#ffff', 
-    marginLeft: 140, 
-    marginRight: 10,
+    marginLeft: 100, 
+    // marginRight: 10,
   },
   tanggal_br:{
     marginLeft: 17, 
