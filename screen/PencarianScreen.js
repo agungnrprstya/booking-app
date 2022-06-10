@@ -21,7 +21,7 @@ function PencarianScreen({ navigation }) {
   //list data picker
   const getRute = async() => {
     const { data, error } = await supabase
-                              .from('stasiun')
+                              .from('rute')
                               .select('*')
                               // .order('stasiun_asal', {ascending:true});
     setDataPicker(data);
@@ -51,7 +51,7 @@ function PencarianScreen({ navigation }) {
           onValueChange={(value) => setAsal(value)}>    
           <Picker.Item label="Kota Asal" value="" />
           {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_asal} value={row.id_stasiun} />
+          <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
         )}
         </Picker>
         <Text style={style.text2}>Ke</Text>
@@ -62,7 +62,7 @@ function PencarianScreen({ navigation }) {
         >
           <Picker.Item label="Kota Tujuan" value="" />
           {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_tujuan} value={row.id_stasiun} />
+          <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
         )}
         </Picker>
         <Text style={style.text3}>Tanggal Pergi</Text>

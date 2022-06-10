@@ -17,7 +17,7 @@ function TiketScreen({ navigation }) {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
                                   .from('tiket')
-                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*), stasiun:id_stasiun(*)')
+                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*), detail:id_detail(*)')
                                   .order('id_tiket', {ascending:false});
         //mengisi state data
         // console.log(error)
@@ -44,16 +44,16 @@ function TiketScreen({ navigation }) {
           <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
         </View>
         <View style={{ flexDirection: 'row', marginTop:20}}>
-          <Text style={{ marginLeft: 11,}}> {item.stasiun.stasiun_asal} </Text>
+          <Text style={{ marginLeft: 11,}}> {item.rute.stasiun_asal} </Text>
           <Text style={{color:'#32aae5', fontWeight:'bold'}}>←----------------------------------→</Text>
-          <Text style={{color:'black'}}> {item.stasiun.stasiun_tujuan} </Text>
+          <Text style={{color:'black'}}> {item.rute.stasiun_tujuan} </Text>
         </View>
         <View style={{ marginLeft: 70 }}>
         </View>
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-          <Text style={{ marginLeft:30, marginTop: 4 }}> {item.rute.jam}</Text>
+          <Text style={{ marginLeft:30, marginTop: 4 }}> {item.detail.jam_berangkat} - {item.detail.jam_sampai}</Text>
           <Text style={{color:'red', fontWeight:'bold', marginHorizontal: 5, marginTop: 3}}>-----------</Text>
-          <Text style={{color:'black', marginTop: 4}}> {item.rute.tanggal}</Text>
+          <Text style={{color:'black', marginTop: 4}}> {item.detail.tanggal}</Text>
         </View>
         <View style={{marginLeft:15}}>
           <Text style={styles.penumpang}>Penumpang</Text>
@@ -62,7 +62,7 @@ function TiketScreen({ navigation }) {
         </View>
         <View>
         <Text style={{color:'black', marginLeft:270, marginTop:-92, position:'absolute', fontWeight:'bold'}}>Harga</Text>
-        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.rute.harga}</Text>
+        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.detail.harga}</Text>
         </View>
         </View>
       

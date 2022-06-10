@@ -28,7 +28,7 @@ function PemesanScreen({ navigation, route}) {
             id_kereta: filter.id_kereta,
             id_penumpang: id_penumpang,
             id_rute: filter.id_rute,
-            id_stasiun: filter.id_stasiun
+            id_detail: filter.id_detail
         })
         // console.log({ tiket: tiket.error, id: tiket.data[0].id })
         Alert.alert('Tiket Berhasil Di Pesan');
