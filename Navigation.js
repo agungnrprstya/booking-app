@@ -11,7 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import { Entypo } from '@expo/vector-icons'; 
 import PencarianScreen from './screen/PencarianScreen';
 import TiketScreen from './screen/TiketScreen';
-import HomeScreen from './screen/HomeScreen';
+// import HomeScreen from './screen/HomeScreen';
 import HasilScreen from './screen/HasilScreen';
 import PemesananScreen from './screen/PemesananScreen';
 // import TambahTiketScreen from './screen/TambahTiketScreen';
@@ -23,7 +23,7 @@ function Navigation() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName={'PencarianScreen'} screenOptions={{headerShown:false}}>
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
           <Stack.Screen name="PencarianScreen" component={NavigationTab} />
           <Stack.Screen name="TiketScreen" component={TiketScreen} />
           <Stack.Screen name="HasilScreen" component={HasilScreen} />

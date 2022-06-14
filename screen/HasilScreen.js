@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList } from "react-native";
-import { Appbar, List, Avatar } from "react-native-paper";
+import { View, Text, TouchableOpacity, ImageBackground, FlatList } from "react-native";
+import { Appbar, List, Avatar, Button } from "react-native-paper";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import supabase from '../supabase';
 
 function HasilScreen({ navigation, route }) {
     let filter= route.params
-    // console.log(route)
+    console.log(route)
     const [data, setData] = useState([]);
     useEffect(() => {
         getData();
@@ -14,112 +15,62 @@ function HasilScreen({ navigation, route }) {
       const getData = async() => {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
-                                  .from('kereta')
-                                  .select('*, rute:id_rute(*), detail:id_detail(*)')
+                                  .from('detail_kereta')
+                                  .select('*, kereta:id_kereta(*), rute:id_rute(*)')
                                   .eq('id_rute', filter.stasiun_tujuan)
                                   .eq('id_rute', filter.stasiun_asal)
-                                //   .eq('id_rute', filter.stasiun_tujuan)
-                                //   .order('nama_kereta', {ascending:false});
-        //mengisi state data
+                                //   .eq('tanggal', filter.tanggal)
+                                  .order('id_detail_kereta', {ascending:true});
+        // mengisi state data
         // console.log(error)
         setData(data);
       }
-
+      
     return (
         <>
-            <Appbar.Header>
-                <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
+            <Appbar.Header style={{ backgroundColor: '#FFFFFF' }}>
+                <Appbar.BackAction color="black" onPress={() => navigation.goBack("")} />
                 <Appbar.Content
-                    title="Hasil Pencarian"
-                    color="white"
+                    title="Select Train"
+                    color="black"
                 />
             </Appbar.Header>
-            <View style={style.background}>
-            <FlatList
+            <ImageBackground style={{
+                width: '100%',
+                height: '100%',
+                flex: 1
+            }}
+                resizeMode='cover'
+                source={require('../assets/Background2.png')}>
+                <FlatList
                 data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                    <List.Item
-                        style={style.container}
-                        key={index}
-                        title={item.nama_kereta}
-                        titleStyle={style.title}
-                        description={item.detail.jam_berangkat}
-                        descriptionStyle={style.description}
-                        left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
-                        right={props => <List.Subheader {...props} style={style.subheader}> Rp {item.detail.harga}.- </List.Subheader>}
-                        onPress={() => navigation.navigate("PemesananScreen", {id_kereta:item.id_kereta, id_rute:item.rute.id_rute, id_detail:item.detail.id_detail})}
-                />
-                // {/* <List.Item
-                //     style={style.container}
-                //     title="BENGAWAN"
-                //     titleStyle={style.title}
-                //     description="10:00 - 15:00"
-                //     descriptionStyle={style.description}
-                //     left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
-                //     right={props => <List.Subheader {...props} style={style.subheader}>Rp 75,000.-</List.Subheader>}
-                //     onPress={() => navigation.navigate("PemesananScreen")}                
-                //     />
-                // <List.Item
-                //     style={style.container}
-                //     title="ARGO PARAHYANGAN"
-                //     titleStyle={style.title}
-                //     description="06:00 - 10:45"
-                //     descriptionStyle={style.description}
-                //     left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
-                //     right={props => <List.Subheader {...props} style={style.subheader}>Rp 350,000.-</List.Subheader>}
-                //     onPress={() => navigation.navigate("PemesananScreen")}                
-                //     />
-                // <List.Item
-                //     style={style.container}
-                //     title="SERAYU"
-                //     titleStyle={style.title}
-                //     description="17:10 - 22:20"
-                //     descriptionStyle={style.description}
-                //     left={props => <Avatar.Image {...props} style={style.avatar} source={require('../assets/kereta.png')} />}
-                //     right={props => <List.Subheader {...props} style={style.subheader}>Rp 100,000.-</List.Subheader>}
-                //     onPress={() => navigation.navigate("PemesananScreen")}                
-                //     /> */}
+                <TouchableOpacity onPress={() => navigation.navigate("PemesananScreen", {detail:item.id_detail_kereta, rute:item.rute.id_rute, kereta:item.kereta.id_kereta})}>
+                    <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, marginTop: 10, borderBottomWidth: 0.4, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}>
+                        <Avatar.Icon size={24} icon="ticket-confirmation" style={{ marginLeft: 10, backgroundColor: "#EB5757", marginTop: 20, position: 'absolute', }} color="#ffff" />
+                        <Text style={{ position: 'absolute', marginLeft: 48, marginTop: 10, fontWeight: '700', color: '#413F42', }}>{item.kereta.nama_kereta}</Text>
+                        <Text style={{ marginLeft: 48, marginTop: 35, marginBottom: 14, color: '#EB5757', fontStyle: 'italic' }}>{item.kelas}</Text>
+                        <Text style={{ position: 'absolute', marginLeft: 270, marginTop: 10, color: '#EB5757', fontWeight: '700' }}>Rp. {item.harga},-</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
+                        <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.rute.stasiun_asal}</Text>
+                        <Text style={{ marginLeft: 35, position: 'absolute', marginTop: 27, fontWeight: '300', color: '#413F42' }}>{item.jam_berangkat}</Text>
+                        <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.rute.stasiun_tujuan}</Text>
+                        <Text style={{ position: 'absolute', marginTop: 27, marginLeft: 305, fontWeight: '300', color: '#413F42' }}>{item.jam_sampai}</Text>
+                        <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 18, marginLeft: 175 }} />
+                        <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 15 }} />
+                        <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 285 }} />
+                        <Text></Text>
+                        <Text></Text>
+                    </View>
+                </TouchableOpacity>
                 )}
-            />
-            </View>
+                />
+            </ImageBackground>
+
         </>
+
     );
 }
-
-const style = StyleSheet.create({
-    background: {
-        flex: 1,
-        backgroundColor: "#F4F3F3",
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#f7f7f7',
-        borderColor: '#32aae5',
-        borderWidth: 3,
-        marginVertical: 5,
-        marginHorizontal: 10,
-        borderRadius: 10,
-    },
-    title:{
-        color: '#2B9FDC', 
-        fontWeight: 'bold', 
-        fontSize: 13
-    },
-    subheader:{
-        color : '#e86a09', 
-        fontWeight: 'bold',
-        marginLeft: -20,
-        marginTop: 5,
-    },
-    description:{
-        fontWeight: 'bold',
-        color : 'black',
-        marginTop: 10
-    },
-    avatar:{
-        backgroundColor: '#f7f7f7', 
-        marginVertical: -6
-    }
-})
 export default HasilScreen;

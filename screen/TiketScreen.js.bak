@@ -26,11 +26,11 @@ function TiketScreen({ navigation }) {
 
   return (
     <>
-      <Appbar.Header style={{ backgroundColor: '#FFFFFF' }}>
-        <Appbar.BackAction color="black" onPress={() => navigation.goBack("")} />
+      <Appbar.Header>
+        <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
         <Appbar.Content
           title="Info Tiket"
-          color="black"
+          color="white"
         />
       </Appbar.Header>
       <FlatList

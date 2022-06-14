@@ -1,164 +1,154 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
-import { Appbar, TextInput, Button } from "react-native-paper";
+import { View, Text, ImageBackground, ScrollView, Image } from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { Appbar, List, Avatar, Button, Card } from "react-native-paper";
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from "@react-native-picker/picker";
+import DatePicker from 'react-native-datepicker';
 import supabase from '../supabase';
-import DatePicker from 'react-native-datepicker'
 
 function PencarianScreen({ navigation }) {
-  const [dataPicker, setDataPicker] = useState([]);
-  const [asal, setAsal] = useState('');
-  const [tujuan, setTujuan] = useState('');
-  const [tanggal, setTanggal] = React.useState('');
-  // const [Tujuan, setTujuan] = React.useState("tujuan");
-  // const [text, setText] = React.useState("");
-  const image = { uri: "https://cdn.dribbble.com/users/2222988/screenshots/6564288/bbb-02.jpg" };
+    const [dataPicker, setDataPicker] = useState([]);
+    const [asal, setAsal] = useState('');
+    const [tujuan, setTujuan] = useState('');
+    const [tanggal, setTanggal] = useState('');
+    // const [Asal, setAsal] = useState();
+    // const [Tujuan, setTujuan] = useState();
+    // const [tanggal, setTanggal] = useState('');
 
-  useEffect(() => {
-    getRute();
-  }, []);
+    useEffect(() => {
+        getRute();
+      }, []);
 
-  //list data picker
-  const getRute = async() => {
+    //list data picker
+    const getRute = async() => {
     const { data, error } = await supabase
                               .from('rute')
                               .select('*')
-                              // .order('stasiun_asal', {ascending:true});
-    setDataPicker(data);
-  }
+                              .order('id_rute', {ascending:true});
+    setDataPicker(data);  
+    }
 
-  return (
-    <>
-      <Appbar.Header>
-        <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />
-        <Appbar.Content
-          title="Tiket Kereta Api"
-          titleStyle={{
-            color: "white",
-          }}
-        />
-      </Appbar.Header>
-      <View style={style.bg}>
-      <ImageBackground source={image} style={{ width: 415, height: 200, alignSelf:'center'}}></ImageBackground>
-      <View style={style.container}>
-        {/* <ImageBackground source={image} style={{ width: 393, height: 200, }}></ImageBackground> */}
-        <Text style={style.header}>Pemesanan Tiket</Text>
-        <Text style={style.border}></Text>
-        <Text style={style.text}>Rute Kereta</Text>
-        <Picker
-          style={style.picker}
-          selectedValue={asal}
-          onValueChange={(value) => setAsal(value)}>    
-          <Picker.Item label="Kota Asal" value="" />
-          {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
-        )}
-        </Picker>
-        <Text style={style.text2}>Ke</Text>
-        <Picker
-          style={style.picker}
-          selectedValue={tujuan}
-          onValueChange={(value) => setTujuan(value)}        
-        >
-          <Picker.Item label="Kota Tujuan" value="" />
-          {dataPicker.map((row) => 
-          <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
-        )}
-        </Picker>
-        <Text style={style.text3}>Tanggal Pergi</Text>
-        <DatePicker 
-        style={{width: 350, marginTop: 10, marginBottom:80}}
-        date={tanggal}
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 5,
-            marginLeft: 7
-          },
-          dateInput: {
-            marginLeft: 45,
-            borderRadius: 50,
-            marginRight: 10,
-          }
-        }}
-        format='DD-MM-YYYY'
-        onDateChange={(date) => setTanggal(date)}
-        />
-      {/* <Text></Text> */}
-      </View>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate("HasilScreen",  {stasiun_asal: asal, stasiun_tujuan: tujuan})}
-          color="#ed4f1a"
-          style={{
-            borderRadius: 30,
-            marginTop: 350,
-            marginHorizontal: 31,
-          }}
-        >
-          CARI
-        </Button>
-      </View>
-    </>
-  );
+    return (
+        <>
+            <StatusBar />
+
+            <View style={{ flex: 1 }}>
+                <ImageBackground style={{
+                    // width: '100%',
+                    // height: '100%',
+                    flex: 1
+                }}
+                    resizeMode='cover'
+                    source={require('../assets/Background2.png')}>
+                    <Image source={require('../assets/Illustration.png')} style={{ position: 'absolute', marginTop: 71, marginLeft: 61 }} />
+                    <View style={{ marginTop: 232, marginHorizontal: 16, backgroundColor: '#ffff', flexDirection: 'row', height: 290, borderRadius: 10 }}>
+                        <Text style={{ position: 'absolute', marginTop: 90, marginLeft: 16, marginRight: 100, color: '#F2F2F2' }}>____________________________________________________ </Text>
+                        <View style={{ marginRight: 10, flex: 1, }}>
+                            <Text style={{ marginTop: 22, marginLeft: 22, color: '#2D9CDB', fontSize: 15, fontWeight: '700' }}>Keberangkatan</Text>
+                            <Picker
+                                style={{ fontSize: 24, marginLeft: 16, marginTop: 4, }}
+                                selectedValue={asal}
+                                onValueChange={(value) => setAsal(value)}>
+                                <Picker.Item label="Kota Tujuan" value="" />
+                                {dataPicker.map((row) => 
+                                <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
+                                )}
+                            </Picker>
+
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ marginTop: 22, marginLeft: 110, marginRight: 16, color: '#2D9CDB', fontSize: 15, fontWeight: '700' }}>Tujuan</Text>
+                            <Picker
+                                style={{ fontSize: 24, marginTop: 4, marginLeft: 20 }}
+                                selectedValue={tujuan}
+                                onValueChange={(value) => setTujuan(value)}>    
+                                <Picker.Item label="Kota Tujuan" value="" />    
+                                {dataPicker.map((row) => 
+                                <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
+                                )}
+                            </Picker>
+                        </View>
+
+                        <View style={{ position: 'absolute', marginTop: 122, backgroundColor: '#fff' }}>
+                            <Text style={{ marginTop: 4, marginLeft: 22, fontWeight: '700', color: '#2D9CDB', fontSize: 15 }}>Tanggal Keberangkatan</Text>
+                            <DatePicker
+                                style={{ width: 350, marginTop: 20, }}
+                                date={tanggal}
+                                customStyles={{
+                                    dateIcon: {
+                                        position: 'absolute',
+                                        left: 0,
+                                        top: 5,
+                                        marginLeft: 7
+                                    },
+                                    dateInput: {
+                                        marginLeft: 45,
+                                        borderRadius: 50,
+                                        marginRight: 10,
+                                    }
+                                }}
+                                format='YYYY-MM-DD'
+                                onDateChange={(date) => setTanggal(date)}
+                            />
+                        </View>
+
+                    </View>
+                    <Button
+                        mode="contained"
+                        onPress={() => navigation.navigate("HasilScreen", {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal: tanggal})}
+                        color="#FE9B4B"
+                        style={{
+                            borderRadius: 30,
+                            marginTop: -60,
+                            marginHorizontal: 90,
+                        }}
+                        labelStyle={{ color: '#fff' }}
+                    >
+                        CARI TIKET
+                    </Button>
+                </ImageBackground>
+                <View style={{ position: 'absolute' }}>
+                    <Text style={{ marginTop: 136, marginLeft: 32, fontSize: 24, fontWeight: '700' }}>
+                        Mau pergi ke
+                    </Text>
+                    <Text style={{ marginTop: 2, marginLeft: 32, fontSize: 24, fontWeight: '700' }}>
+                        mana hari ini ?
+                    </Text>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ position: 'absolute', color: 'black', marginTop: 340, marginLeft: 32, fontSize: 16, fontWeight: '700' }}>Berita</Text>
+                    </View>
+                        <View style={{ flexDirection: 'row', marginTop: 370 }}>
+                        <ScrollView horizontal={true}>
+                            <Card style={{ marginLeft: 16, width: 262, height: 140 }}>
+                                <Card.Content>
+                                    <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 28, backgroundColor: '#85D3FF', color: '#ffff', }}>  Tips  </Text>
+                                    <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 50 }}> Tetap Jaga</Text>
+                                    <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 70 }}> Komunikasi</Text>
+                                    <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 90 }}> Selama di kereta</Text>
+                                </Card.Content>
+                                <Card.Cover source={require('../assets/pesan.png')} style={{ width: 90, height: 100, marginLeft: 140, backgroundColor: '#ffff', marginRight: 10 }} />
+                            </Card>
+                            <View>
+
+                                <Card style={{ marginLeft: 16, width: 262, height: 140 }}>
+                                    <Card.Content>
+                                        <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 28, backgroundColor: '#F47814', color: '#ffff', }}>  Update  </Text>
+                                        <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 55 }}> Protokol</Text>
+                                        <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 75 }}> Kesehatan di</Text>
+                                        <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 95 }}> Kereta</Text>
+                                    </Card.Content>
+                                    <Card.Cover source={require('../assets/healthy.png')} style={{ width: 90, height: 100, marginLeft: 140, backgroundColor: '#ffff', marginRight: 10 }} />
+                                </Card>
+                            </View>
+                        </ScrollView>
+                    </View>
+                </View>
+            </View>
+        </>
+
+
+    );
 }
-const style = StyleSheet.create({
-  header:{
-    textAlign: 'center', 
-    alignItems: 'center', 
-    fontSize: 20, 
-    marginTop: 10,
-    marginBottom: 15, 
-    fontWeight: 'bold'
-  },
-  border:{
-    borderTopColor: 'darkblue',
-    borderTopWidth: 3,
-  },
-  text: {
-    marginLeft: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  text2: {
-    marginLeft: 10,
-    marginBottom: 10,
-    fontWeight: "bold",
-    fontSize: 20,
-    paddingTop: 10,
-  },
-  text3: {
-    marginLeft: 10,
-    fontWeight: "bold",
-    fontSize: 20,
-    paddingBottom: 1,
-    paddingTop: 10,
-  },
-  picker: {
-    borderRadius: 100,
-    fontSize: 20,
-    marginVertical: 2,
-    borderBottomEndRadius: 100,
-  },
-  container: {
-    // marginHorizontal: 100,
-    marginTop: 146,
-    alignSelf: 'center',
-    // marginBottom: 15,
-    borderRadius: 5,
-    backgroundColor: "white",
-    position: 'absolute',
-    // justifyContent: 'center',
-    // height: 100,
-    width: 350,
-    // alignItems: 'left'
-    },
-  bg: {
-    backgroundColor: '#F4F3F3',
-    flex: 1
-  }
-});
 export default PencarianScreen;
