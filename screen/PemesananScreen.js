@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Alert, StyleSheet, FlatList, Text, ImageBackground } from 'react-native';
-import { Appbar, List, Avatar, Button, TextInput } from "react-native-paper";
+import { Appbar, List, Avatar, Button, TextInput, Card } from "react-native-paper";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import supabase from '../supabase';
 
 function PemesananScreen({ navigation, route }) {
@@ -10,23 +11,23 @@ function PemesananScreen({ navigation, route }) {
     // console.log(route)
     // const [kereta, setKereta] = React.useState('');
     // const [tanggal, setTanggal] = React.useState('');
-    // const [data, setData] = useState([]);
-    // useEffect(() => {
-    //     getData();
-    //     }, [data]);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        getData();
+        }, [data]);
 
-    // const getData = async() => {
-    //     //data : hasil query, error : pesan error
-    //     const { data, error } = await supabase
-    //                               .from('detail_kereta')
-    //                               .select('*, kereta:id_kereta(*)')
-    //                               .eq('id_detail_kereta', filter.detail)
-    //                             //   .eq('id_rute', filter.stasiun_asal)
-    //                             //   .order('id_detail_kereta', {ascending:true});
-    //     //mengisi state data
-    //     // console.log(error)
-    //     setData(data);
-    // }
+    const getData = async() => {
+        //data : hasil query, error : pesan error
+        const { data, error } = await supabase
+                                  .from('detail_kereta')
+                                  .select('*, kereta:id_kereta(*), rute:id_rute(*)')
+                                  .eq('id_detail_kereta', filter.detail)
+                                //   .eq('id_rute', filter.stasiun_asal)
+                                //   .order('id_detail_kereta', {ascending:true});
+        //mengisi state data
+        // console.log(error)
+        setData(data);
+    }
 
     const onSimpan = async() => {
         //data : hasil query, error : pesan error
@@ -55,23 +56,51 @@ function PemesananScreen({ navigation, route }) {
 
     return (
         <>
-            <Appbar.Header style={{ backgroundColor: '#FFFFFF' }}>
-                <Appbar.BackAction color="black" onPress={() => navigation.goBack("")} />
+            <Appbar.Header>
+                <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
                 <Appbar.Content
                     title="Ringkasan Pemesanan"
                     color="black"
                 />
             </Appbar.Header>
-            <View style={{ flex: 1 }}>
-                <ImageBackground style={{
-                    width: '100%',
-                    height: '100%',
-                    flex: 1
-                }}
-                    resizeMode='cover'
-                    source={require('../assets/Background2.png')}>
-                    <View style={{ marginHorizontal: 16, marginTop: 10, borderColor: '#ffff', height: 300 }}>
-                        <View style={{}}>
+            <ImageBackground style={{
+                width: '100%',
+                height: '100%',
+                flex: 1
+            }}
+                resizeMode='cover'
+                source={require('../assets/Dackground.png')}>
+                <FlatList
+                data={data}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => (
+                   <>
+                   <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, marginTop: 10, borderBottomWidth: 0.4, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}>
+                        <Avatar.Icon size={24} icon="ticket-confirmation" style={{ marginLeft: 10, backgroundColor: "#EB5757", marginTop: 20, position: 'absolute', }} color="#ffff" />
+                        <Text style={{ position: 'absolute', marginLeft: 48, marginTop: 10, fontWeight: '700', color: '#413F42', }}>{item.kereta.nama_kereta}</Text>
+                        <Text style={{ marginLeft: 48, marginTop: 35, marginBottom: 14, color: '#EB5757', fontStyle: 'italic' }}>{item.kelas}</Text>
+                        <Text style={{ position: 'absolute', marginLeft: 270, marginTop: 10, color: '#EB5757', fontWeight: '700' }}>Rp. {item.harga},-</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
+                            <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.rute.stasiun_asal}</Text>
+                            <Text style={{ marginLeft: 35, position: 'absolute', marginTop: 27, fontWeight: '300', color: '#413F42' }}>{item.jam_berangkat}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.rute.stasiun_tujuan}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 27, marginLeft: 305, fontWeight: '300', color: '#413F42' }}>{item.jam_sampai}</Text>
+                            <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 18, marginLeft: 175 }} />
+                            <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 15 }} />
+                            <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 285 }} />
+                            <Text></Text>
+                            <Text></Text>
+                        </View>
+                        </>
+                        )}
+                        />                        
+                <View style={{ position:'absolute', marginTop: 150, alignSelf:'center' }}>
+                    <MaterialCommunityIcons name="account-multiple" size={25} color="#F47814" style={{ position: 'absolute', }} />
+                    <Text style={{ marginLeft: 35, marginTop: 3, fontWeight: '700', fontSize: 16 }}>Detail Penumpang</Text>
+                    <Card style={{ width: 343, height: 250, marginTop: 1 }}>
+                        <Card.Content style={{ marginTop: 5, marginHorizontal: 16 }}>
+                            {/* <Text style={{ marginLeft: 10 }}>Penumpang</Text> */}
                             <TextInput
                                 style={{ backgroundColor: '#ffff' }}
                                 label="Nama"
@@ -84,28 +113,29 @@ function PemesananScreen({ navigation, route }) {
                                 label="Nomor Telepon"
                                 value={telepon}
                                 left={<TextInput.Icon name="phone" />}
-                                onChangeText={telepon => setTelepon(telepon)}
+                                onChangeText={telpon => setTelepon(telpon)}
 
                             />
-                            <Button
-                                mode="contained"
-                                style={{ marginHorizontal: 40, borderRadius: 30, marginTop: 10 }}
-                                color="#FE9B4B"
-                                labelStyle={{ color: '#fff' }}
-                            onPress={() => Alert.alert("Pesan", "Apakah Data Sudah Benar?",
-                                [
-                                    { text: "Tidak" },
-                                    { text: "Iya", onPress: () => onSimpan() }
-                                ]
-                            )}
-                            >
-                                Simpan
-                            </Button>
-                        </View>
-                    </View>
+                            <View>
+                                <Button
+                                    mode="contained"
+                                    style={{ marginTop: 30, borderRadius: 25 }}
+                                    color="#ed4f1a"
+                                    onPress={() => Alert.alert("Pesan", "Apakah Data Sudah Benar?",
+                                        [
+                                            { text: "Tidak" },
+                                            { text: "Iya", onPress: () => onSimpan() }
+                                        ]
+                                    )}
+                                >
+                                    Simpan
+                                </Button>
+                            </View>
+                        </Card.Content>
+                    </Card>
+                </View>
+            </ImageBackground>
 
-                </ImageBackground>
-            </View>
 
         </>
 
