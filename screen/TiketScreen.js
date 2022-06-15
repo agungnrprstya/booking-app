@@ -89,62 +89,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical:5
   },
-  border:{
-    borderWidth: 3,
-    borderRadius: 20, 
-    marginHorizontal:20, 
-    marginVertical: 10,
-    borderColor: '#32aae5', 
-    backgroundColor:'#fff'
-  },
-  border_penumpang:{
-    borderWidth: 3,
-    borderRadius: 20, 
-    marginHorizontal:10,
-    marginBottom: 10,
-    borderColor: '#32aae5', 
-    backgroundColor:'#fff'
-  },
-  kereta:{
-    marginTop: 20, 
-    marginLeft: 14, 
-    fontWeight: 'bold',
-    color:'black'
-  },
-  jadwal: {
-    borderColor: '#F4F3F3',
-    marginTop: 10,
-    marginLeft: 16, 
-    marginBottom: 10,
-    backgroundColor: '#F4F3F3', 
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  penumpang: {
-    marginTop: 10, 
-    // marginLeft: 16, 
-    marginBottom: 10,
-    fontWeight: 'bold',
-  },
-  avatar:{
-    backgroundColor: '#ffff', 
-    marginLeft: 280,
-    position:'absolute',
-  },
-  tanggal_br:{
-    marginLeft: 17, 
-    position:'absolute',
-    marginTop: 20, 
-    fontSize:11, 
-    color:'black'
-  },
-  tanggal_pl:{
-    marginLeft: 17, 
-    position:'absolute', 
-    marginTop: 70, 
-    fontSize:11, 
-    color:'black'
-  },
 });
 
 export default TiketScreen;
