@@ -56,8 +56,8 @@ function PemesananScreen({ navigation, route }) {
 
     return (
         <>
-            <Appbar.Header>
-                <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
+            <Appbar.Header style={{ backgroundColor: '#FFFFFF' }}>
+                <Appbar.BackAction color="black" onPress={() => navigation.goBack("")} />
                 <Appbar.Content
                     title="Ringkasan Pemesanan"
                     color="black"
@@ -97,7 +97,7 @@ function PemesananScreen({ navigation, route }) {
                         />                        
                 <View style={{ position:'absolute', marginTop: 150, alignSelf:'center' }}>
                     <MaterialCommunityIcons name="account-multiple" size={25} color="#F47814" style={{ position: 'absolute', }} />
-                    <Text style={{ marginLeft: 35, marginTop: 3, fontWeight: '700', fontSize: 16 }}>Detail Penumpang</Text>
+                    <Text style={{ marginLeft: 35, marginTop: 5, fontWeight: '700', fontSize: 16 }}>Detail Penumpang</Text>
                     <Card style={{ width: 343, height: 250, marginTop: 1 }}>
                         <Card.Content style={{ marginTop: 5, marginHorizontal: 16 }}>
                             {/* <Text style={{ marginLeft: 10 }}>Penumpang</Text> */}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import { Appbar, List, Avatar, Button } from "react-native-paper";
+import { Appbar, Card } from "react-native-paper";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import supabase from '../supabase';
-// import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-// import style from 'react-native-datepicker/style';
 
 function TiketScreen({ navigation }) {
 
@@ -24,55 +23,60 @@ function TiketScreen({ navigation }) {
         setData(data);
       }
 
-  return (
-    <>
-      <Appbar.Header style={{ backgroundColor: '#FFFFFF' }}>
-        <Appbar.BackAction color="black" onPress={() => navigation.goBack("")} />
-        <Appbar.Content
-          title="Info Tiket"
-          color="black"
-        />
-      </Appbar.Header>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-      <View>
-        <View style={styles.border}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.kereta}>{item.kereta.nama_kereta}</Text>
-          <Avatar.Image style={styles.avatar} source={require('../assets/kereta.png')} />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop:20}}>
-          <Text style={{ marginLeft: 11,}}> {item.rute.stasiun_asal} </Text>
-          <Text style={{color:'#32aae5', fontWeight:'bold'}}>←----------------------------------→</Text>
-          <Text style={{color:'black'}}> {item.rute.stasiun_tujuan} </Text>
-        </View>
-        <View style={{ marginLeft: 70 }}>
-        </View>
-        <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-          <Text style={{ marginLeft:30, marginTop: 4 }}> {item.detail_kereta.jam_berangkat} - {item.detail_kereta.jam_sampai}</Text>
-          <Text style={{color:'red', fontWeight:'bold', marginHorizontal: 5, marginTop: 3}}>-----------</Text>
-          <Text style={{color:'black', marginTop: 4}}> {item.detail_kereta.tanggal}</Text>
-        </View>
-        <View style={{marginLeft:15}}>
-          <Text style={styles.penumpang}>Penumpang</Text>
-          <Text style={{ marginBottom: 10 }}>{item.penumpang.nama_penumpang}</Text>
-          <Text style={{ marginBottom: 20, color:'black'}}>{item.penumpang.no_telepon}</Text>
-        </View>
-        <View>
-        <Text style={{color:'black', marginLeft:270, marginTop:-92, position:'absolute', fontWeight:'bold'}}>Harga</Text>
-        <Text style={{color:'black', marginLeft:270, marginTop:-64, position:'absolute', fontWeight:'bold', color:'#e67a0e'}}>Rp{item.detail_kereta.harga}</Text>
-        </View>
-        </View>
-      
+      return (
+        <>
+            <Appbar.Header style={{ backgroundColor: '#FE9B4B' }}>
+                <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
+                <Appbar.Content
+                    title="Info Tiket"
+                    color="white"
+                />
+            </Appbar.Header>
+            <LinearGradient colors={['#FE9B4B', '#BBF7FB', '#2596D7']} style={{ flex: 1 }}>
+            <FlatList
+                data={data}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item, index }) => (
+                <View style={{ marginTop: 10, marginHorizontal: 22, }}>
+                    <Card style={{ marginTop: 20, borderBottomWidth: 0.5, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+                        <Card.Content style={{ marginHorizontal: 10 }}>
+                            <Text>{item.kereta.nama_kereta}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 280, }}>{item.id_tiket}</Text>
+                            {/* <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 50, marginLeft: 140 }} />
+                        <Text style={{ marginTop: 20 }}>Pasar Senen</Text>
+                        <Text style={{ position: 'absolute', marginTop: 53, marginLeft: 215 }}>Pasar Senen</Text> */}
+                        </Card.Content>
+                    </Card>
+                    <Card style={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+                        <Card.Content style={{ marginHorizontal: 12, }}>
+                            <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 25, marginLeft: 145 }} />
+                            <Text>{item.rute.stasiun_asal}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 15, marginLeft: 230 }}>{item.rute.stasiun_tujuan}</Text>
+                            <Text style={{ marginTop: 5 }}>{item.detail_kereta.jam_berangkat}</Text>
+                            <Text style={{ marginTop: 40, position: 'absolute', marginLeft: 250 }}>{item.detail_kereta.jam_sampai}</Text>
+                            <Text style={{ marginTop: 55, position: 'absolute', marginLeft: 120, }}>{item.detail_kereta.tanggal}</Text>
+                            <Text></Text>
+                        </Card.Content>
+                    </Card>
+                    <Card style={{ borderTopWidth: 0.5, borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+                        <Card.Content style={{ marginHorizontal: 12 }}>
+                            <Text style={{ color: 'black' }}>{item.penumpang.nama_penumpang}</Text>
+                            <Text style={{ color: 'grey', marginTop: 2 }}>Pemesan</Text>
+                            <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 200 }}>{item.penumpang.no_telepon}</Text>
+                            <Text style={{ color: 'grey', position: 'absolute', marginTop: 37, marginLeft: 195 }}>Nomor Telepon</Text>
+                            <Text style={{ marginTop: 10 }}>{item.detail_kereta.kelas}</Text>
+                            <Text style={{ color: 'grey', marginTop: 2 }}>Class</Text>
+                            <Text style={{ position: 'absolute', marginTop: 67, marginLeft: 215 }}>Rp. {item.detail_kereta.harga}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 87, marginLeft: 256, color: 'grey' }}>Price</Text>
+                        </Card.Content>
+                    </Card>
+                </View>
+            )}
+            />
+            </LinearGradient>
+        </>
 
-        <StatusBar style="auto" />
-      </View>
-       )}
-      />  
-    </>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
