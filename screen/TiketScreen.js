@@ -41,7 +41,7 @@ function TiketScreen({ navigation }) {
                     <Card style={{ marginTop: 20, borderBottomWidth: 0.5, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                         <Card.Content style={{ marginHorizontal: 10 }}>
                             <Text>{item.kereta.nama_kereta}</Text>
-                            <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 280, }}>{item.id_tiket}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 240, }}>ID Tiket : {item.id_tiket}</Text>
                             {/* <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 50, marginLeft: 140 }} />
                         <Text style={{ marginTop: 20 }}>Pasar Senen</Text>
                         <Text style={{ position: 'absolute', marginTop: 53, marginLeft: 215 }}>Pasar Senen</Text> */}
