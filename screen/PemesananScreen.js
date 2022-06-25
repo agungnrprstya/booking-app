@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Alert, StyleSheet, FlatList, Text, ImageBackground } from 'react-native';
-import { Appbar, List, Avatar, Button, TextInput, Card } from "react-native-paper";
+import { Appbar, List, Avatar, Button, TextInput, Card, RadioButton } from "react-native-paper";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import supabase from '../supabase';
 
 function PemesananScreen({ navigation, route }) {
     const [nama, setNama] = React.useState('');
     const [telepon, setTelepon] = React.useState('');
+    const [gender, setGender] = React.useState('');
     let filter= route.params
     // console.log(route)
     // const [kereta, setKereta] = React.useState('');
@@ -35,7 +36,8 @@ function PemesananScreen({ navigation, route }) {
                                   .from('penumpang')
                                   .insert({
                                     nama_penumpang: nama,   
-                                    no_telepon: telepon
+                                    no_telepon: telepon,
+                                    gender : gender
                                   });
         // console.log(error)                          
         // console.log({ pemesan: pemesan.error, id: pemesan.data[0].id})
@@ -51,7 +53,7 @@ function PemesananScreen({ navigation, route }) {
         })
         // console.log({ tiket: tiket.error, id: tiket.data[0].id })
         Alert.alert('Tiket Berhasil Di Pesan');
-        navigation.navigate('PencarianScreen');
+        navigation.navigate('TiketTab');
     } 
 
     return (
@@ -133,6 +135,16 @@ function PemesananScreen({ navigation, route }) {
                             </View>
                         </Card.Content>
                     </Card>
+                    <RadioButton.Group onValueChange={data => setGender(data)} value={gender}>
+                    <View style={{flexDirection:"row-reverse",alignItems:'flex-start'}}>
+                        <Text>Laki-laki</Text>
+                        <RadioButton value="Laki-laki" />
+                    </View>
+                    <View style={{flexDirection:"row-reverse",alignItems:'flex-start'}}>
+                        <Text>Perempuan</Text>
+                        <RadioButton value="Perempuan" />
+                    </View>
+                    </RadioButton.Group>
                 </View>
             </ImageBackground>
 

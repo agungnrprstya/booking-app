@@ -19,7 +19,7 @@ function HasilScreen({ navigation, route }) {
                                   .select('*, kereta:id_kereta(*), rute:id_rute(*)')
                                   .eq('id_rute', filter.stasiun_tujuan)
                                   .eq('id_rute', filter.stasiun_asal)
-                                  .eq('tanggal', filter.tanggal)
+                                //   .eq('tanggal', filter.tanggal)
                                   .order('id_detail_kereta', {ascending:true});
         // mengisi state data
         // console.log(error)

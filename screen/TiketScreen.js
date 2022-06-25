@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { Appbar, Card } from "react-native-paper";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import supabase from '../supabase';
+
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 
 function TiketScreen({ navigation }) {
 
@@ -23,10 +26,28 @@ function TiketScreen({ navigation }) {
         setData(data);
       }
 
+      const onPrint = async(data) => {
+        //file content
+        let html = `<ul>`;
+                    // data.map((item) => {
+                      html += `<li>`+data.id_tiket+ `<br>Penerbit : ` + data.rute.stasiun_tujuan + `</li>`;
+                    // })
+            html += `</ul>`;
+    
+        //print file
+        const { uri } = await Print.printToFileAsync({
+          html
+        });
+    
+        //share file
+        await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+      }
+
       return (
         <>
             <Appbar.Header style={{ backgroundColor: '#FE9B4B' }}>
                 <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
+                {/* <Appbar.Action icon="printer" onPress={() => navigation.navigate("PemesananScreen")} /> */}
                 <Appbar.Content
                     title="Info Tiket"
                     color="white"
@@ -37,6 +58,13 @@ function TiketScreen({ navigation }) {
                 data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
+                <TouchableOpacity 
+                  onPress={() => Alert.alert("Pesan", "Cetak Tiket?",
+                    [
+                      { text: "Tidak" },
+                      { text: "Iya", onPress: () => onPrint(item) }
+                    ]
+                )}>
                 <View style={{ marginTop: 10, marginHorizontal: 22, }}>
                     <Card style={{ marginTop: 20, borderBottomWidth: 0.5, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                         <Card.Content style={{ marginHorizontal: 10 }}>
@@ -71,6 +99,7 @@ function TiketScreen({ navigation }) {
                         </Card.Content>
                     </Card>
                 </View>
+                </TouchableOpacity>
             )}
             />
             </LinearGradient>
