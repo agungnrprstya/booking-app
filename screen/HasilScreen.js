@@ -6,7 +6,7 @@ import supabase from '../supabase';
 
 function HasilScreen({ navigation, route }) {
     let filter= route.params
-    // console.log(route)
+    console.log(route)
     const [data, setData] = useState([]);
     useEffect(() => {
         getData();
@@ -46,7 +46,7 @@ function HasilScreen({ navigation, route }) {
                 data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, index }) => (
-                <TouchableOpacity onPress={() => navigation.navigate("PemesananScreen", {detail:item.id_detail_kereta, rute:item.rute.id_rute, kereta:item.kereta.id_kereta})}>
+                <TouchableOpacity onPress={() => navigation.navigate("PemesananScreen", {detail:item.id_detail_kereta, rute:item.rute.id_rute, kereta:item.kereta.id_kereta, jumlah: filter.jumlah})}>
                     <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, marginTop: 10, borderBottomWidth: 0.4, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }}>
                         <Avatar.Icon size={24} icon="ticket-confirmation" style={{ marginLeft: 10, backgroundColor: "#EB5757", marginTop: 20, position: 'absolute', }} color="#ffff" />
                         <Text style={{ position: 'absolute', marginLeft: 48, marginTop: 10, fontWeight: '700', color: '#413F42', }}>{item.kereta.nama_kereta}</Text>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, ScrollView, Image } from "react-native";
 import { StatusBar } from 'expo-status-bar';
-import { Appbar, List, Avatar, Button, Card } from "react-native-paper";
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Appbar, List, Avatar, Button, Card, TextInput } from "react-native-paper";
+// import { AntDesign } from '@expo/vector-icons';
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from "@react-native-picker/picker";
 import DatePicker from 'react-native-datepicker';
 import supabase from '../supabase';
@@ -13,6 +13,7 @@ function PencarianScreen({ navigation }) {
     const [asal, setAsal] = useState('');
     const [tujuan, setTujuan] = useState('');
     const [tanggal, setTanggal] = useState('');
+    const [jumlah, setJumlah] = React.useState('');
     // const [Asal, setAsal] = useState();
     // const [Tujuan, setTujuan] = useState();
     // const [tanggal, setTanggal] = useState('');
@@ -69,7 +70,7 @@ function PencarianScreen({ navigation }) {
                                 <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
                                 )}
                             </Picker>
-                        </View>
+                                                    </View>
 
                         <View style={{ position: 'absolute', marginTop: 122, backgroundColor: '#fff' }}>
                             <Text style={{ marginTop: 4, marginLeft: 22, fontWeight: '700', color: '#2D9CDB', fontSize: 15 }}>Tanggal Keberangkatan</Text>
@@ -92,12 +93,22 @@ function PencarianScreen({ navigation }) {
                                 format='YYYY-MM-DD'
                                 onDateChange={(date) => setTanggal(date)}
                             />
+                            <Text></Text>
+                            <Text></Text>
+                            {/* <Text></Text> */}
+                            <TextInput
+                                style={{ backgroundColor: '#ffff' }}
+                                label="Jumlah Penumpang"
+                                value={jumlah}
+                                onChangeText={jumlah => setJumlah(jumlah)}
+                                left={<TextInput.Icon name="account" />}
+                            />
                         </View>
 
                     </View>
                     <Button
                         mode="contained"
-                        onPress={() => navigation.navigate("HasilScreen", {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal: tanggal})}
+                        onPress={() => navigation.navigate("HasilScreen", {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal: tanggal, jumlah: jumlah})}
                         color="#FE9B4B"
                         style={{
                             borderRadius: 30,
