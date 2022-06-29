@@ -225,6 +225,7 @@ function PemesananScreen({ navigation, route }) {
                     color="black"
                 />
             </Appbar.Header>
+            <ScrollView>
             <ImageBackground style={{
                 width: '100%',
                 height: '100%',
@@ -256,8 +257,8 @@ function PemesananScreen({ navigation, route }) {
                             </View>
                         </>
                     )}
-                />
-                <View style={{ position: 'absolute', marginTop: 150, alignSelf: 'center' }}>
+                    />
+                <View style={{ alignSelf:'center' }}>
                     <MaterialCommunityIcons name="account-multiple" size={25} color="#F47814" style={{ position: 'absolute', marginTop: 8 }} />
                     <Text style={{ marginLeft: 35, marginTop: 10, fontWeight: '700', fontSize: 16 }}>Detail Penumpang</Text>
                     <Card style={{ width: 343, height: 310, marginTop: 10 }}>
@@ -308,7 +309,7 @@ function PemesananScreen({ navigation, route }) {
                         </Card.Content>
                     </Card>
                 </View>
-                <View style={{ position: 'absolute', marginTop: 500, alignSelf: 'center' }}>
+                <View style={{ alignSelf:'center' }}>
                     <MaterialCommunityIcons name="account-multiple" size={25} color="#F47814" style={{ position: 'absolute', marginTop: 8 }} />
                     <Text style={{ marginLeft: 35, marginTop: 10, fontWeight: '700', fontSize: 16 }}>Detail Penumpang</Text>
                     <Card style={{ width: 343, height: 310, marginTop: 10 }}>
@@ -360,6 +361,7 @@ function PemesananScreen({ navigation, route }) {
                     </Card>
                 </View>
             </ImageBackground>
+        </ScrollView>
         </>
         )
     }

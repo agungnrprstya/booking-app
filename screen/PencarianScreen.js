@@ -20,15 +20,15 @@ function PencarianScreen({ navigation }) {
 
     useEffect(() => {
         getRute();
-      }, []);
+    }, []);
 
     //list data picker
-    const getRute = async() => {
-    const { data, error } = await supabase
-                              .from('rute')
-                              .select('*')
-                              .order('id_rute', {ascending:true});
-    setDataPicker(data);  
+    const getRute = async () => {
+        const { data, error } = await supabase
+            .from('rute')
+            .select('*')
+            .order('id_rute', { ascending: true });
+        setDataPicker(data);
     }
 
     return (
@@ -44,7 +44,7 @@ function PencarianScreen({ navigation }) {
                     resizeMode='cover'
                     source={require('../assets/Background2.png')}>
                     <Image source={require('../assets/Illustration.png')} style={{ position: 'absolute', marginTop: 71, marginLeft: 61 }} />
-                    <View style={{ marginTop: 232, marginHorizontal: 16, backgroundColor: '#ffff', flexDirection: 'row', height: 290, borderRadius: 10 }}>
+                    <View style={{ marginTop: 232, marginHorizontal: 16, backgroundColor: '#ffff', flexDirection: 'row', height: 340, borderRadius: 10 }}>
                         <Text style={{ position: 'absolute', marginTop: 90, marginLeft: 16, marginRight: 100, color: '#F2F2F2' }}>____________________________________________________ </Text>
                         <View style={{ marginRight: 10, flex: 1, }}>
                             <Text style={{ marginTop: 22, marginLeft: 22, color: '#2D9CDB', fontSize: 15, fontWeight: '700' }}>Keberangkatan</Text>
@@ -53,8 +53,8 @@ function PencarianScreen({ navigation }) {
                                 selectedValue={asal}
                                 onValueChange={(value) => setAsal(value)}>
                                 <Picker.Item label="Kota Tujuan" value="" />
-                                {dataPicker.map((row) => 
-                                <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
+                                {dataPicker.map((row) =>
+                                    <Picker.Item label={row.stasiun_asal} value={row.id_rute} />
                                 )}
                             </Picker>
 
@@ -64,13 +64,13 @@ function PencarianScreen({ navigation }) {
                             <Picker
                                 style={{ fontSize: 24, marginTop: 4, marginLeft: 20 }}
                                 selectedValue={tujuan}
-                                onValueChange={(value) => setTujuan(value)}>    
-                                <Picker.Item label="Kota Tujuan" value="" />    
-                                {dataPicker.map((row) => 
-                                <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
+                                onValueChange={(value) => setTujuan(value)}>
+                                <Picker.Item label="Kota Tujuan" value="" />
+                                {dataPicker.map((row) =>
+                                    <Picker.Item label={row.stasiun_tujuan} value={row.id_rute} />
                                 )}
                             </Picker>
-                                                    </View>
+                        </View>
 
                         <View style={{ position: 'absolute', marginTop: 122, backgroundColor: '#fff' }}>
                             <Text style={{ marginTop: 4, marginLeft: 22, fontWeight: '700', color: '#2D9CDB', fontSize: 15 }}>Tanggal Keberangkatan</Text>
@@ -97,7 +97,7 @@ function PencarianScreen({ navigation }) {
                             <Text></Text>
                             {/* <Text></Text> */}
                             <TextInput
-                                style={{ backgroundColor: '#ffff' }}
+                                style={{ backgroundColor: '#ffff', marginTop: -30 }}
                                 label="Jumlah Penumpang"
                                 value={jumlah}
                                 onChangeText={jumlah => setJumlah(jumlah)}
@@ -108,11 +108,11 @@ function PencarianScreen({ navigation }) {
                     </View>
                     <Button
                         mode="contained"
-                        onPress={() => navigation.navigate("HasilScreen", {stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal: tanggal, jumlah: jumlah})}
+                        onPress={() => navigation.navigate("HasilScreen", { stasiun_asal: asal, stasiun_tujuan: tujuan, tanggal: tanggal, jumlah: jumlah })}
                         color="#FE9B4B"
                         style={{
                             borderRadius: 30,
-                            marginTop: -60,
+                            marginTop: -45,
                             marginHorizontal: 90,
                         }}
                         labelStyle={{ color: '#fff' }}
@@ -128,11 +128,11 @@ function PencarianScreen({ navigation }) {
                         mana hari ini ?
                     </Text>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ position: 'absolute', color: 'black', marginTop: 340, marginLeft: 32, fontSize: 16, fontWeight: '700' }}>Berita</Text>
+                        <Text style={{ position: 'absolute', color: 'black', marginTop: 365, marginLeft: 32, fontSize: 16, fontWeight: '700' }}>Berita</Text>
                     </View>
-                        <View style={{ flexDirection: 'row', marginTop: 370 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 370 }}>
                         <ScrollView horizontal={true}>
-                            <Card style={{ marginLeft: 16, width: 262, height: 140 }}>
+                            <Card style={{ marginLeft: 16, width: 262, height: 140, marginTop: 20 }}>
                                 <Card.Content>
                                     <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 28, backgroundColor: '#85D3FF', color: '#ffff', }}>  Tips  </Text>
                                     <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 50 }}> Tetap Jaga</Text>
@@ -143,7 +143,7 @@ function PencarianScreen({ navigation }) {
                             </Card>
                             <View>
 
-                                <Card style={{ marginLeft: 16, width: 262, height: 140 }}>
+                                <Card style={{ marginLeft: 16, width: 262, height: 140, marginTop: 20 }}>
                                     <Card.Content>
                                         <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 28, backgroundColor: '#F47814', color: '#ffff', }}>  Update  </Text>
                                         <Text style={{ position: 'absolute', marginLeft: 24, marginTop: 55 }}> Protokol</Text>
@@ -154,6 +154,7 @@ function PencarianScreen({ navigation }) {
                                 </Card>
                             </View>
                         </ScrollView>
+
                     </View>
                 </View>
             </View>
