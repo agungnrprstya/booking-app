@@ -30,8 +30,37 @@ function TiketScreen({ navigation }) {
         //file content
         let html = `<ul>`;
                     // data.map((item) => {
-                      html += `<li>`+data.id_tiket+ `<br>Penerbit : ` + data.stasiun.stasiun_tujuan + `</li>`;
+                      html += `Nama : ` + data.penumpang.nama_penumpang + ` (`+data.penumpang.gender+`)` + 
+                      `<br>Nama Kereta : ` + data.kereta.nama_kereta + ` (`+data.rute.kelas+`)` +
+                      `<br>Stasiun Asal : ` + data.stasiun.stasiun_asal +
+                      `<br>Stasiun Tujuan : ` + data.stasiun.stasiun_tujuan +
+                      `<br>Jam Berangkat : ` + data.rute.jam_berangkat +
+                      `<br>Jam Sampai : ` + data.rute.jam_sampai +
+                      `<br>Harga Tiket : ` + data.rute.harga;
                     // })
+            html += `</ul>`;
+    
+        //print file
+        const { uri } = await Print.printToFileAsync({
+          html
+        });
+    
+        //share file
+        await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+      }
+
+      const onPrint2 = async(data) => {
+        //file content
+        let html = `<ul>`;
+                    data.map((item) => {
+                      html += `<br>Nama : ` + item.penumpang.nama_penumpang + ` (`+item.penumpang.gender+`)` + 
+                      `<br>Nama Kereta : ` + item.kereta.nama_kereta + ` (`+item.rute.kelas+`)` +
+                      `<br>Stasiun Asal : ` + item.stasiun.stasiun_asal +
+                      `<br>Stasiun Tujuan : ` + item.stasiun.stasiun_tujuan +
+                      `<br>Jam Berangkat : ` + item.rute.jam_berangkat +
+                      `<br>Jam Sampai : ` + item.rute.jam_sampai +
+                      `<br>Harga Tiket : ` + item.rute.harga + `<br>`;
+                    })
             html += `</ul>`;
     
         //print file
@@ -47,7 +76,7 @@ function TiketScreen({ navigation }) {
         <>
             <Appbar.Header style={{ backgroundColor: '#FE9B4B' }}>
                 <Appbar.BackAction color="white" onPress={() => navigation.goBack("")} />
-                {/* <Appbar.Action icon="printer" onPress={() => navigation.navigate("PemesananScreen")} /> */}
+                <Appbar.Action icon="printer" onPress={() => onPrint2(data)} />
                 <Appbar.Content
                     title="Info Tiket"
                     color="white"
