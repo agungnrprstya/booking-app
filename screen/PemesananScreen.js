@@ -30,9 +30,9 @@ function PemesananScreen({ navigation, route }) {
     const getData = async () => {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
-            .from('detail_kereta')
-            .select('* , kereta:id_kereta(*), rute:id_rute(*)')
-            .eq('id_detail_kereta', filter.detail)
+            .from('rute')
+            .select('* , kereta:id_kereta(*), stasiun:id_stasiun(*)')
+            .eq('id_rute', filter.rute)
         //   .eq('id_rute', filter.stasiun_asal)
         //   .order('id_detail_kereta', {ascending:true});
         //mengisi state data
@@ -58,8 +58,8 @@ function PemesananScreen({ navigation, route }) {
             .insert({
                 id_kereta: filter.kereta,
                 id_penumpang: id_penumpang,
-                id_rute: filter.rute,
-                id_detail_kereta: filter.detail
+                id_stasiun: filter.stasiun,
+                id_rute: filter.rute
             })
         
         // console.log({ tiket: tiket.error, id: tiket.data[0].id })
@@ -96,8 +96,8 @@ function PemesananScreen({ navigation, route }) {
             .insert({
                 id_kereta: filter.kereta,
                 id_penumpang: id_penumpang,
-                id_rute: filter.rute,
-                id_detail_kereta: filter.detail
+                id_stasiun: filter.stasiun,
+                id_rute: filter.rute
             })
         
         let tiket2 = await supabase
@@ -105,8 +105,8 @@ function PemesananScreen({ navigation, route }) {
             .insert({
                 id_kereta: filter.kereta,
                 id_penumpang: id_penumpang2,
-                id_rute: filter.rute,
-                id_detail_kereta: filter.detail
+                id_stasiun: filter.stasiun,
+                id_rute: filter.rute
             })
 
         // console.log({ tiket: tiket.error, id: tiket.data[0].id })
@@ -144,9 +144,9 @@ function PemesananScreen({ navigation, route }) {
                                 <Text style={{ position: 'absolute', marginLeft: 270, marginTop: 10, color: '#EB5757', fontWeight: '700' }}>Rp. {item.harga},-</Text>
                             </View>
                             <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
-                                <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.rute.stasiun_asal}</Text>
+                                <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.stasiun.stasiun_asal}</Text>
                                 <Text style={{ marginLeft: 35, position: 'absolute', marginTop: 27, fontWeight: '300', color: '#413F42' }}>{item.jam_berangkat}</Text>
-                                <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.rute.stasiun_tujuan}</Text>
+                                <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.stasiun.stasiun_tujuan}</Text>
                                 <Text style={{ position: 'absolute', marginTop: 27, marginLeft: 305, fontWeight: '300', color: '#413F42' }}>{item.jam_sampai}</Text>
                                 <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 18, marginLeft: 175 }} />
                                 <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 15 }} />
@@ -245,9 +245,9 @@ function PemesananScreen({ navigation, route }) {
                                 <Text style={{ position: 'absolute', marginLeft: 270, marginTop: 10, color: '#EB5757', fontWeight: '700' }}>Rp. {item.harga},-</Text>
                             </View>
                             <View style={{ backgroundColor: '#ffff', marginHorizontal: 10, borderTopRightRadius: 15, borderTopLeftRadius: 15 }}>
-                                <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.rute.stasiun_asal}</Text>
+                                <Text style={{ marginLeft: 10, marginTop: 6, color: '#413F42' }}>{item.stasiun.stasiun_asal}</Text>
                                 <Text style={{ marginLeft: 35, position: 'absolute', marginTop: 27, fontWeight: '300', color: '#413F42' }}>{item.jam_berangkat}</Text>
-                                <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.rute.stasiun_tujuan}</Text>
+                                <Text style={{ position: 'absolute', marginTop: 6, marginLeft: 280, color: '#413F42' }}>{item.stasiun.stasiun_tujuan}</Text>
                                 <Text style={{ position: 'absolute', marginTop: 27, marginLeft: 305, fontWeight: '300', color: '#413F42' }}>{item.jam_sampai}</Text>
                                 <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 18, marginLeft: 175 }} />
                                 <MaterialCommunityIcons name="clock-time-nine-outline" size={17} color="#413F42" style={{ position: 'absolute', marginTop: 29, fontWeight: 'bold', marginLeft: 15 }} />

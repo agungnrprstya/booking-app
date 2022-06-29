@@ -19,7 +19,7 @@ function TiketScreen({ navigation }) {
         //data : hasil query, error : pesan error
         const { data, error } = await supabase
                                   .from('tiket')
-                                  .select('id_tiket, rute:id_rute(*), kereta:id_kereta(*), penumpang:id_penumpang(*), detail_kereta:id_detail_kereta(*)')
+                                  .select('id_tiket, stasiun:id_stasiun(*), kereta:id_kereta(*), penumpang:id_penumpang(*), rute:id_rute(*)')
                                   .order('id_tiket', {ascending:false});
         //mengisi state data
         // console.log(error)
@@ -30,7 +30,7 @@ function TiketScreen({ navigation }) {
         //file content
         let html = `<ul>`;
                     // data.map((item) => {
-                      html += `<li>`+data.id_tiket+ `<br>Penerbit : ` + data.rute.stasiun_tujuan + `</li>`;
+                      html += `<li>`+data.id_tiket+ `<br>Penerbit : ` + data.stasiun.stasiun_tujuan + `</li>`;
                     // })
             html += `</ul>`;
     
@@ -78,11 +78,11 @@ function TiketScreen({ navigation }) {
                     <Card style={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
                         <Card.Content style={{ marginHorizontal: 12, }}>
                             <MaterialCommunityIcons name="arrow-right-drop-circle-outline" size={24} color="#EB5757" style={{ position: 'absolute', marginTop: 25, marginLeft: 145 }} />
-                            <Text>{item.rute.stasiun_asal}</Text>
-                            <Text style={{ position: 'absolute', marginTop: 15, marginLeft: 230 }}>{item.rute.stasiun_tujuan}</Text>
-                            <Text style={{ marginTop: 5 }}>{item.detail_kereta.jam_berangkat}</Text>
-                            <Text style={{ marginTop: 40, position: 'absolute', marginLeft: 250 }}>{item.detail_kereta.jam_sampai}</Text>
-                            <Text style={{ marginTop: 55, position: 'absolute', marginLeft: 120, }}>{item.detail_kereta.tanggal}</Text>
+                            <Text>{item.stasiun.stasiun_asal}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 15, marginLeft: 230 }}>{item.stasiun.stasiun_tujuan}</Text>
+                            <Text style={{ marginTop: 5 }}>{item.rute.jam_berangkat}</Text>
+                            <Text style={{ marginTop: 40, position: 'absolute', marginLeft: 250 }}>{item.rute.jam_sampai}</Text>
+                            <Text style={{ marginTop: 55, position: 'absolute', marginLeft: 120, }}>{item.rute.tanggal}</Text>
                             <Text></Text>
                         </Card.Content>
                     </Card>
@@ -92,9 +92,9 @@ function TiketScreen({ navigation }) {
                             <Text style={{ color: 'grey', marginTop: 2 }}>Pemesan</Text>
                             <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 200 }}>{item.penumpang.no_telepon}</Text>
                             <Text style={{ color: 'grey', position: 'absolute', marginTop: 37, marginLeft: 195 }}>Nomor Telepon</Text>
-                            <Text style={{ marginTop: 10 }}>{item.detail_kereta.kelas}</Text>
+                            <Text style={{ marginTop: 10 }}>{item.rute.kelas}</Text>
                             <Text style={{ color: 'grey', marginTop: 2 }}>Class</Text>
-                            <Text style={{ position: 'absolute', marginTop: 67, marginLeft: 215 }}>Rp. {item.detail_kereta.harga}</Text>
+                            <Text style={{ position: 'absolute', marginTop: 67, marginLeft: 215 }}>Rp. {item.rute.harga}</Text>
                             <Text style={{ position: 'absolute', marginTop: 87, marginLeft: 256, color: 'grey' }}>Price</Text>
                         </Card.Content>
                     </Card>
