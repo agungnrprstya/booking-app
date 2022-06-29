@@ -85,7 +85,7 @@ function PemesananScreen({ navigation, route }) {
             .insert({
                 nama_penumpang: nama2,
                 no_telepon: telepon2,
-                gender: gender
+                gender: gender2
             });
         // console.log(error)                          
         // console.log({ pemesan: pemesan.error, id: pemesan.data[0].id})

@@ -88,7 +88,7 @@ function TiketScreen({ navigation }) {
                     </Card>
                     <Card style={{ borderTopWidth: 0.5, borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
                         <Card.Content style={{ marginHorizontal: 12 }}>
-                            <Text style={{ color: 'black' }}>{item.penumpang.nama_penumpang}</Text>
+                            <Text style={{ color: 'black' }}>{item.penumpang.nama_penumpang} ({item.penumpang.gender})</Text>
                             <Text style={{ color: 'grey', marginTop: 2 }}>Pemesan</Text>
                             <Text style={{ position: 'absolute', marginTop: 18, marginLeft: 200 }}>{item.penumpang.no_telepon}</Text>
                             <Text style={{ color: 'grey', position: 'absolute', marginTop: 37, marginLeft: 195 }}>Nomor Telepon</Text>

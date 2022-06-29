@@ -57,7 +57,6 @@ function PencarianScreen({ navigation }) {
                                     <Picker.Item label={row.stasiun_asal} value={row.id_stasiun} />
                                 )}
                             </Picker>
-
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={{ marginTop: 22, marginLeft: 110, marginRight: 16, color: '#2D9CDB', fontSize: 15, fontWeight: '700' }}>Tujuan</Text>
