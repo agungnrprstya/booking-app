@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Appbar, List, Avatar, Button } from "react-native-paper";
 import supabase from '../supabase';
 // import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-// import style from 'react-native-datepicker/style';
+
 
 function TiketScreen({ navigation }) {
 

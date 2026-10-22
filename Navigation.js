@@ -3,7 +3,7 @@ import React from 'react';
 // import { Appbar } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { Fontisto } from '@expo/vector-icons';
@@ -17,7 +17,7 @@ import PemesananScreen from './screen/PemesananScreen';
 // import TambahTiketScreen from './screen/TambahTiketScreen';
 
 const Stack = createNativeStackNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 function Navigation() {
     return (
@@ -37,14 +37,16 @@ function Navigation() {
 function NavigationTab() {
     return (
       <Tab.Navigator
-        activeColor="white"
-        barStyle={{ backgroundColor: '#2B9FDC' }}
+        screenOptions={{
+          tabBarActiveTintColor: 'white',
+          tabBarStyle: { backgroundColor: '#2B9FDC' },
+        }}
       >
         <Tab.Screen
           name="HomeTab"
           component={PencarianScreen}
           options={{
-            tabBarLabel: false,
+            tabBarShowLabel: false,
             tabBarIcon: ({color}) => (
             <MaterialIcons name="train" color={color} size={26} />
             ),
@@ -54,7 +56,7 @@ function NavigationTab() {
           name="TiketTab"
           component={TiketScreen}
           options={{
-            tabBarLabel: false,
+            tabBarShowLabel: false,
             tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="ticket-account" color={color} size={26} />
             ),
