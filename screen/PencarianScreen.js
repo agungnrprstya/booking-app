@@ -3,13 +3,27 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import supabase from '../supabase';
-import DatePicker from 'react-native-datepicker'
+import DateTimePicker from '@react-native-community/datetimepicker'
+
+const pad = (n) => String(n).padStart(2, '0');
+
+// react-native-datepicker produced 'DD-MM-YYYY'; keep that shape for the
+// value that gets passed to HasilScreen.
+const formatTanggal = (date) =>
+  `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()}`;
+
+const parseTanggal = (value) => {
+  const [d, m, y] = value.split('-').map(Number);
+  const parsed = new Date(y, m - 1, d);
+  return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+};
 
 function PencarianScreen({ navigation }) {
   const [dataPicker, setDataPicker] = useState([]);
   const [asal, setAsal] = useState('');
   const [tujuan, setTujuan] = useState('');
   const [tanggal, setTanggal] = React.useState('');
+  const [showPicker, setShowPicker] = React.useState(false);
   // const [Tujuan, setTujuan] = React.useState("tujuan");
   // const [text, setText] = React.useState("");
   const image = { uri: "https://cdn.dribbble.com/users/2222988/screenshots/6564288/bbb-02.jpg" };
@@ -66,25 +80,36 @@ function PencarianScreen({ navigation }) {
         )}
         </Picker>
         <Text style={style.text3}>Tanggal Pergi</Text>
-        <DatePicker 
-        style={{width: 350, marginTop: 10, marginBottom:80}}
-        date={tanggal}
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 5,
-            marginLeft: 7
-          },
-          dateInput: {
+        <TouchableOpacity
+          onPress={() => setShowPicker(true)}
+          style={{
+            width: 350,
+            marginTop: 10,
+            marginBottom: 80,
             marginLeft: 45,
-            borderRadius: 50,
             marginRight: 10,
-          }
-        }}
-        format='DD-MM-YYYY'
-        onDateChange={(date) => setTanggal(date)}
-        />
+            borderWidth: 1,
+            borderColor: '#c9c9c9',
+            borderRadius: 50,
+            paddingVertical: 12,
+            paddingHorizontal: 16,
+          }}
+        >
+          <Text>{tanggal || 'DD-MM-YYYY'}</Text>
+        </TouchableOpacity>
+        {showPicker && (
+          <DateTimePicker
+            value={tanggal ? parseTanggal(tanggal) : new Date()}
+            mode="date"
+            display="default"
+            onChange={(event, selected) => {
+              setShowPicker(false);
+              if (event.type === 'set' && selected) {
+                setTanggal(formatTanggal(selected));
+              }
+            }}
+          />
+        )}
       {/* <Text></Text> */}
       </View>
         <Button
